@@ -10,7 +10,7 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 
 	"github.com/openvino/openvino-api/src/app/handler"
-	"github.com/openvino-api/src/app/model"
+	"github.com/openvino/openvino-api/src/app/model"
 	"github.com/openvino/openvino-api/src/config"
 )
 
