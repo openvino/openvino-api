@@ -7,41 +7,29 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
-type Project struct {
+type SensorData struct {
 	gorm.Model
-	Title    string `gorm:"unique" json:"title"`
-	Archived bool   `json:"archived"`
-	Tasks    []Task `gorm:"ForeignKey:ProjectID" json:"tasks"`
-}
 
-func (p *Project) Archive() {
-	p.Archived = true
-}
+	Timestamp 		*time.Time   	`gorm:"primary_key" json:"timestamp"`
+	SensorID  		string     		`gorm:"primary_key" json:"sensor_id"`
 
-func (p *Project) Restore() {
-	p.Archived = false
-}
+	Humidity2  		int 			`json:"humidity2"`
+	Humidity1		int				`json:"humidity1"`
+	Humidity05		int				`json:"humidity05"`
+	Humidity005		int             `json:"humidity005"`
 
-type Task struct {
-	gorm.Model
-	Title     string     `json:"title"`
-	Priority  string     `gorm:"type:ENUM('0', '1', '2', '3');default:'0'" json:"priority"`
-	Deadline  *time.Time `gorm:"default:null" json:"deadline"`
-	Done      bool       `json:"done"`
-	ProjectID uint       `json:"project_id"`
-}
-
-func (t *Task) Complete() {
-	t.Done = true
-}
-
-func (t *Task) Undo() {
-	t.Done = false
+	WindVelocity 	int				`json:"wind_velocity"`
+	WindGust 		int				`json:"wind_gust"`
+	WindDirection	int				`json:"wind_direction"`
+	Pressure		int				`json:"pressure"`
+	Rain 			int				`json:"rain"`
+	Temperature		int				`json:"temperature"`
+	Humidity		int				`json:"humidity"`
+	
 }
 
 // DBMigrate will create and migrate the tables, and then make the some relationships if necessary
 func DBMigrate(db *gorm.DB) *gorm.DB {
-	db.AutoMigrate(&Project{}, &Task{})
-	db.Model(&Task{}).AddForeignKey("project_id", "projects(id)", "CASCADE", "CASCADE")
+	db.AutoMigrate(&SensorData{})	
 	return db
 }

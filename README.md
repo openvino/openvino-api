@@ -5,22 +5,30 @@ Minimal GoLang API Project Structure with Docker
 
 ## Requirements
 
- - Docker installed
+ - Docker and docker-compose installed
  - GoLang CLI
 
 ## Setup
 Clone this repository
 
     git clone https://github.com/openvino/openvino-api.git
-    cd enchainte-go-api-sample
+    cd openvino-api
 
 Install Go dependencies
 
     go mod download
 
 Setup environment variables
-
+    
+    cp .env.example .env
     cp .env.yml.example .env.yml
+
+Fill the required parameters in the .env file
+
+    MYSQL_ROOT_PASSWORD= [root_password]
+    MYSQL_DATABASE= [database_name]
+    MYSQL_USER= [user_name]
+    MYSQL_PASSWORD= [user_password] 
 
 Fill the required parameters in the .env.yml file
 
@@ -40,5 +48,4 @@ To run locally:
 
 To run on Docker (WIP):
 
-    docker build -t openvino-api .
-    docker run openvino-api
+    docker-compose up
