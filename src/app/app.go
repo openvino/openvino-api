@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/gorilla/handlers"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 
@@ -42,35 +43,45 @@ func (a *App) Initialize(config *config.Config) {
 
 // setRouters sets the all required routers
 func (a *App) setRouters() {
-	// Routing for handling the projects
 
-	a.Router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) { w.Write([]byte("Hello world! This is the openvino api.")) })
-	
+	a.Router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("Hello world! This is the Openvino api."))
+	})
+
+	// Routing for handling the projects
 	a.Get("/sensor_data", a.handleRequest(handler.GetSensorDataDay)).Queries("day", "{[1-31]*?}").Queries("month", "{[0-12]*?}").Queries("year", "{[0-2030]*?}")
 	a.Get("/sensor_data", a.handleRequest(handler.GetSensorDataMonth)).Queries("month", "{[1-12]*?}").Queries("year", "{[0-2030]*?}")
 	a.Get("/sensor_data", a.handleRequest(handler.GetSensorDataYear)).Queries("year", "{[2019-2030]*?}")
+	a.Get("/sensor_data", a.handleRequest(handler.GetSensorDataWrong))
 	a.Post("/sensor_data", a.handleRequest(handler.CreateSensorData))
+
+	a.Router.Use(handlers.CORS(
+					handlers.AllowedHeaders([]string{"content-type"}),
+					handlers.AllowedOrigins([]string{"*"}),
+					handlers.AllowedMethods([]string{"GET", "POST", "PUT", "OPTIONS", "DELETE"}),
+					handlers.AllowCredentials(),
+				));
 
 }
 
 // Get wraps the router for GET method
-func (a *App) Get(path string, f func(w http.ResponseWriter, r *http.Request))  *mux.Route {
-	return a.Router.HandleFunc(path, f).Methods("GET")
+func (a *App) Get(path string, f func(w http.ResponseWriter, r *http.Request)) *mux.Route {
+	return a.Router.HandleFunc(path, f).Methods("GET", "OPTIONS")
 }
 
 // Post wraps the router for POST method
 func (a *App) Post(path string, f func(w http.ResponseWriter, r *http.Request)) *mux.Route {
-	return a.Router.HandleFunc(path, f).Methods("POST")
+	return a.Router.HandleFunc(path, f).Methods("POST", "OPTIONS")
 }
 
 // Put wraps the router for PUT method
-func (a *App) Put(path string, f func(w http.ResponseWriter, r *http.Request))  *mux.Route {
-	return a.Router.HandleFunc(path, f).Methods("PUT")
+func (a *App) Put(path string, f func(w http.ResponseWriter, r *http.Request)) *mux.Route {
+	return a.Router.HandleFunc(path, f).Methods("PUT", "OPTIONS")
 }
 
 // Delete wraps the router for DELETE method
 func (a *App) Delete(path string, f func(w http.ResponseWriter, r *http.Request)) *mux.Route {
-	return a.Router.HandleFunc(path, f).Methods("DELETE")
+	return a.Router.HandleFunc(path, f).Methods("DELETE", "OPTIONS")
 }
 
 // Run the app on it's router

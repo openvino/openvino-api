@@ -1,17 +1,17 @@
 
-# Enchainte - GoLang API Sample
+# Openvino - GoLang API for Sensoric
 
-Minimal GoLang API Project Structure with Docker
+ GoLang API Projectwith Docker used for Openvino APIs to treat with sensoric data collected.
 
 ## Requirements
 
- - Docker and docker-compose installed
+ - Docker & Docker-compose installed
  - GoLang CLI
 
 ## Setup
 Clone this repository
 
-    git clone https://github.com/openvino/openvino-api.git
+    git clone https://github.com/OpenVino/openvino-api
     cd openvino-api
 
 Install Go dependencies
@@ -19,33 +19,34 @@ Install Go dependencies
     go mod download
 
 Setup environment variables
-    
+
     cp .env.example .env
-    cp .env.yml.example .env.yml
 
-Fill the required parameters in the .env file
+Fill the required parameters in the .env file. Some of them can be left empty depending on the case.
 
-    MYSQL_ROOT_PASSWORD= [root_password]
-    MYSQL_DATABASE= [database_name]
-    MYSQL_USER= [user_name]
-    MYSQL_PASSWORD= [user_password] 
+    ENVIRONMENT= [dev/prod environment]
+    API_PORT= [exposed api port]
 
-Fill the required parameters in the .env.yml file
+    DATABASE_DIALECT= [dialect]
+    DATABASE_CHARSET= [charset used: utf8]
+    DATABASE_NAME=  [database name]
 
-    port: [api port]
-    database:
-	    dialect: [db dialect]
-	    host: [db host]
-	    port: [db port]
-	    username: [db username]
-	    password: [db password]
-	    name: [db name]
-	    charset: utf8
+    DATABASE_HOST= [database endpoint]
+    DATABASE_PORT= [database exposed port]
+
+    DATABASE_USERNAME= [database user]
+    DATABASE_PASSWORD= [database password]
+    DATABASE_PASSWORD_ROOT= [database root password]
 
 To run locally:
 
     go run main.go
 
-To run on Docker (WIP):
+To run on Docker (WIP) you have to modify the Dockerfile $database and the $port with the proper information and:
+
+    docker build -t openvino-api:latest .
+    docker run -ti openvino-api:latest -e ".env" 
+
+To run using Docker-compose:
 
     docker-compose up

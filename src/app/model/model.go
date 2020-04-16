@@ -8,23 +8,24 @@ import (
 )
 
 type SensorData struct {
-	gorm.Model
 
-	Timestamp 		*time.Time   	`gorm:"primary_key" json:"timestamp"`
-	SensorID  		string     		`gorm:"primary_key" json:"sensor_id"`
+	Hash			string				`gorm:"primary_key" json:"hash"`
 
-	Humidity2  		int 			`json:"humidity2"`
-	Humidity1		int				`json:"humidity1"`
-	Humidity05		int				`json:"humidity05"`
-	Humidity005		int             `json:"humidity005"`
+	Timestamp 		*time.Time   		`json:"timestamp"`
+	SensorID  		string     			`json:"sensor_id"`
 
-	WindVelocity 	int				`json:"wind_velocity"`
-	WindGust 		int				`json:"wind_gust"`
-	WindDirection	int				`json:"wind_direction"`
-	Pressure		int				`json:"pressure"`
-	Rain 			int				`json:"rain"`
-	Temperature		int				`json:"temperature"`
-	Humidity		int				`json:"humidity"`
+	Humidity2  		float64 			`json:"humidity2"`
+	Humidity1		float64				`json:"humidity1"`
+	Humidity05		float64				`json:"humidity05"`
+	Humidity005		float64             `json:"humidity005"`
+
+	WindVelocity 	float64				`json:"wind_velocity"`
+	WindGust 		float64				`json:"wind_gust"`
+	WindDirection	float64				`json:"wind_direction"`
+	Pressure		float64				`json:"pressure"`
+	Rain 			float64				`json:"rain"`
+	Temperature		float64				`json:"temperature"`
+	Humidity		float64				`json:"humidity"`
 	
 }
 

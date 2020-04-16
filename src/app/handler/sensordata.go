@@ -1,15 +1,15 @@
 package handler
 
 import (
-	"fmt"
+	"time"
 	"encoding/json"
 	"net/http"
 	"github.com/jinzhu/gorm"
 	"github.com/openvino/openvino-api/src/app/model"
 )
 
-func GetSensorData(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
-	
+func GetSensorDataWrong(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
+	respondError(w, http.StatusBadRequest, "Malformed query")
 }
 
 func GetSensorDataDay(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
@@ -19,7 +19,6 @@ func GetSensorDataDay(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 	year := r.URL.Query().Get("year")
 
 	sensordata := []model.SensorData{}
-	fmt.Println("Hello, Im a day")
 
 	db.Where("DAY(timestamp) = ? AND MONTH(timestamp) = ? AND YEAR(timestamp) = ?", day, month, year).Find(&sensordata)
 	respondJSON(w, http.StatusOK, sensordata)
@@ -32,7 +31,7 @@ func GetSensorDataMonth(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 	year := r.URL.Query().Get("year")
 
 	sensordata := []model.SensorData{}
-	fmt.Println("Hello, Im a month")
+
 	db.Where("MONTH(timestamp) = ? AND YEAR(timestamp) = ?", month, year).Find(&sensordata)
 	respondJSON(w, http.StatusOK, sensordata)
 
@@ -43,7 +42,6 @@ func GetSensorDataYear(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 	year := r.URL.Query().Get("year")
 
 	sensordata := []model.SensorData{}
-	fmt.Println("Hello, Im a nigger")
 
 	db.Where("YEAR(timestamp) = ?", year).Find(&sensordata)
 	respondJSON(w, http.StatusOK, sensordata)
@@ -61,12 +59,14 @@ func CreateSensorData(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 	}
 	defer r.Body.Close()
 
-	if err := db.Save(&sensordata).Error; err != nil {
+	now := time.Now()
+	sensordata.Timestamp = &now
+
+	if err := db.FirstOrCreate(&sensordata).Error; err != nil {
 		respondError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	
 	respondJSON(w, http.StatusCreated, sensordata)
 
 }

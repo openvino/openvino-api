@@ -3,8 +3,7 @@ package config
 import (
 	"log"
 	"os"
-
-	"github.com/spf13/viper"
+	"strconv"
 )
 
 type Config struct {
@@ -14,47 +13,52 @@ type Config struct {
 type Constants struct {
 	Environment string
 	Port        int
+	Database Database
+}
 
-	Database struct {
-		Dialect  string
-		Host     string
-		Port     int
-		Username string
-		Password string
-		Name     string
-		Charset  string
+type Database struct {
+	Dialect  string
+	Host     string
+	Port     int
+	Username string
+	Password string
+	Name     string
+	Charset  string
+}
+
+func New() *Config {
+	return &Config {
+		Constants: Constants {
+			Environment: getEnv("ENVIRONMENT", "DEV"),
+			Port: getEnvInt("API_PORT", 7878),
+			Database: Database {
+				Dialect: getEnv("DATABASE_DIALECT", "mysql"),
+				Host: getEnv("DATABASE_HOST", "database"),
+				Port: getEnvInt("DATABASE_PORT", 3306),
+				Username: getEnv("DATABASE_USERNAME", "test"),
+				Password: getEnv("DATABASE_PASSWORD", "test123"),
+				Name: getEnv("DATABASE_NAME", "test_db"),
+				Charset: getEnv("DATABASE_CHARSET", "utf8"),
+			},
+		},
 	}
 }
 
-func initViper() (Constants, error) {
-
-	if os.Getenv("ENVIRONMENT") == "PRO" {
-		viper.AutomaticEnv()
+func getEnv(key string, defaultVal string) string {
+	if value, exists := os.LookupEnv(key); exists { 
+		return value 
 	} else {
-		viper.SetConfigName(".env")
-		viper.AddConfigPath(".")
-		err := viper.ReadInConfig()
-		if err != nil {
-			return Constants{}, err
-		}
-
-		if err = viper.ReadInConfig(); err != nil {
-			log.Panicf("Error reading config file, %s", err)
-		}
+		log.Println("Default value used for " + key + ": " + defaultVal)
+		return defaultVal
 	}
-
-	var constants Constants
-	var err = viper.Unmarshal(&constants)
-
-	log.Printf("Loaded Env Variables:\n %+v", constants)
-	return constants, err
 }
 
-func GetConfig() (*Config, error) {
-	config := Config{}
-
-	constants, err := initViper()
-	config.Constants = constants
-
-	return &config, err
+func getEnvInt(key string, defaultVal int) int {
+	valueStr := getEnv(key, strconv.Itoa(defaultVal));
+	if value, err := strconv.Atoi(valueStr); err == nil { 
+		return value 
+	} else {
+		return defaultVal
+	}
 }
+

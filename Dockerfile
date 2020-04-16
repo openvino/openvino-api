@@ -1,4 +1,4 @@
-FROM golang AS builder
+FROM golang:alpine AS builder
 
 # Set necessary environmet variables needed for our image
 ENV GO111MODULE=on \
@@ -31,12 +31,9 @@ RUN cp /build/main .
 FROM alpine:3.11
 
 COPY --from=builder /dist/main /
-
-COPY .env.yml /
 COPY wait-for-it.sh /
 
 RUN apk update && apk add bash
-# Script to wait for the database to be initialized.
 
 # Command to run
-CMD ./wait-for-it.sh -t 0 database:3306 -- /main
+CMD ./wait-for-it.sh -t 0 database:3306 --  /main

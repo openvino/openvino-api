@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
 
-    openvino-db:
+    doyourbit-db:
         image: mysql/mysql-server:latest
         container_name: database
         ports:
@@ -10,29 +10,39 @@ services:
         expose:
             - 3306
         environment:
-            - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
-            - "MYSQL_DATABASE=${MYSQL_DATABASE}"
-            - "MYSQL_USER=${MYSQL_USER}"
-            - "MYSQL_PASSWORD=${MYSQL_PASSWORD}"
+            - "MYSQL_ROOT_PASSWORD=${DATABASE_PASSWORD_ROOT}"
+            - "MYSQL_DATABASE=${DATABASE_NAME}"
+            - "MYSQL_USER=${DATABASE_USERNAME}"
+            - "MYSQL_PASSWORD=${DATABASE_PASSWORD}"
         networks:
             - internal
         volumes:
-            - costaflores-db:/var/lib/mysql
+            - test-db:/var/lib/mysql
         
-    openvino-api:
+    doyourbit-api:
         build:
             context: .
             dockerfile: Dockerfile
         container_name: api
+        environment:
+            - "ENVIRONMENT=${ENVIRONMENT}"
+            - "API_PORT=${API_PORT}"
+            - "DATABASE_HOST=database"
+            - "DATABASE_PORT=3306"
+            - "DATABASE_DIALECT=mysql"
+            - "DATABASE_NAME=${DATABASE_NAME}"
+            - "DATABASE_CHARSET=${DATABASE_CHARSET}"
+            - "DATABASE_USERNAME=${DATABASE_USERNAME}"
+            - "DATABASE_PASSWORD=${DATABASE_PASSWORD}"
         networks:
             - internal
         ports:
-            - 3000:3000
+            - "${API_PORT}:${API_PORT}"
         expose:
-            - 3000
+            - "${API_PORT}"
         
 networks:
     internal:
 
 volumes:
-    costaflores-db:
+    test-db:
