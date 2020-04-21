@@ -1,8 +1,6 @@
 package handler
 
 import (
-	"time"
-	"encoding/json"
 	"net/http"
 	"github.com/jinzhu/gorm"
 	"github.com/openvino/openvino-api/src/app/model"
