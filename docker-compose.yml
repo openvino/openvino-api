@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
 
-    doyourbit-db:
+    openvino-db:
         image: mysql/mysql-server:latest
         container_name: database
         ports:
@@ -19,7 +19,7 @@ services:
         volumes:
             - test-db:/var/lib/mysql
         
-    doyourbit-api:
+    openvino-api:
         build:
             context: .
             dockerfile: Dockerfile

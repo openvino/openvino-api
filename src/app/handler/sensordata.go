@@ -61,26 +61,3 @@ func GetSensorDataYear(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 	respondJSON(w, http.StatusOK, sensordata)
 
 }
-
-func CreateSensorData(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
-	
-	sensordata := model.SensorData{}
-
-	decoder := json.NewDecoder(r.Body)
-	if err := decoder.Decode(&sensordata); err != nil {
-		respondError(w, http.StatusBadRequest, err.Error())
-		return
-	}
-	defer r.Body.Close()
-
-	now := time.Now()
-	sensordata.Timestamp = &now
-
-	if err := db.FirstOrCreate(&sensordata).Error; err != nil {
-		respondError(w, http.StatusInternalServerError, err.Error())
-		return
-	}
-
-	respondJSON(w, http.StatusCreated, sensordata)
-
-}

@@ -53,12 +53,11 @@ func (a *App) setRouters() {
 	a.Get("/sensor_data", a.handleRequest(handler.GetSensorDataMonth)).Queries("month", "{[1-12]*?}").Queries("year", "{[0-2030]*?}")
 	a.Get("/sensor_data", a.handleRequest(handler.GetSensorDataYear)).Queries("year", "{[2019-2030]*?}")
 	a.Get("/sensor_data", a.handleRequest(handler.GetSensorDataWrong))
-	a.Post("/sensor_data", a.handleRequest(handler.CreateSensorData))
 
 	a.Router.Use(handlers.CORS(
 					handlers.AllowedHeaders([]string{"content-type"}),
 					handlers.AllowedOrigins([]string{"*"}),
-					handlers.AllowedMethods([]string{"GET", "POST", "PUT", "OPTIONS", "DELETE"}),
+					handlers.AllowedMethods([]string{"GET", "OPTIONS"}),
 					handlers.AllowCredentials(),
 				));
 
