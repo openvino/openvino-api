@@ -7,7 +7,8 @@ import (
 )
 
 func GetRoot(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
-	root := r.URL.Query().Get("root")
+	
+	root := mux.Vars(r)["root"]
 	tx_hash := []model.Root{}
 
 	db.Where("root = ?", root).Find(&tx_hash)
