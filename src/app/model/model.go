@@ -29,8 +29,16 @@ type SensorData struct {
 	
 }
 
+type Root struct {
+
+	Root			string				`gorm:"primary_key" json:"root"`
+	TxHash			string				`json:"tx_hash"`
+
+}
+
 // DBMigrate will create and migrate the tables, and then make the some relationships if necessary
 func DBMigrate(db *gorm.DB) *gorm.DB {
 	db.AutoMigrate(&SensorData{})	
+	db.AutoMigrate(&Root{})
 	return db
 }
