@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"github.com/jinzhu/gorm"
 	"github.com/openvino/openvino-api/src/app/model"
+	"github.com/gorilla/mux"
 )
 
 func GetRoot(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
