@@ -36,9 +36,18 @@ type Root struct {
 
 }
 
+type Buyer struct {
+
+	PublicKey			string			`gorm:"primary_key" json:"public_key"`
+	Email				string			`json:"email"`
+	Amount				int				`json:"amount"`
+
+}
+
 // DBMigrate will create and migrate the tables, and then make the some relationships if necessary
 func DBMigrate(db *gorm.DB) *gorm.DB {
 	db.AutoMigrate(&SensorData{})	
 	db.AutoMigrate(&Root{})
+	db.AutoMigrate(&Buyer{})
 	return db
 }
