@@ -60,7 +60,7 @@ func (a *App) setRouters() {
 	a.Router.Use(handlers.CORS(
 					handlers.AllowedHeaders([]string{"content-type"}),
 					handlers.AllowedOrigins([]string{"*"}),
-					handlers.AllowedMethods([]string{"GET", "OPTIONS"}),
+					handlers.AllowedMethods([]string{"GET", "POST", "OPTIONS"}),
 					handlers.AllowCredentials(),
 				));
 
