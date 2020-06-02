@@ -36,7 +36,7 @@ func GetSensorDataMonth(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 				"max(wind_velocity) as wind_velocity, max(wind_gust) as wind_gust," +
 				"avg(wind_direction) as wind_direction, avg(pressure) as pressure," +
 				"max(rain) as rain, avg(temperature) as temperature," +
-				"avg(humidity) as humidity").Group("day(timestamp), sensor_id").Having("year(timestamp) = ? AND month(timestamp) = ?", year, month).Find(&sensordata)
+				"avg(humidity) as humidity").Where("year(timestamp) = ? AND month(timestamp) = ?", year, month).Group("day(timestamp), sensor_id").Find(&sensordata)
 
 	respondJSON(w, http.StatusOK, sensordata)
 
