@@ -42,6 +42,19 @@ func GetSensorDataMonth(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 
 }
 
+func GetSensorDataMonthHash(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
+	
+	month := r.URL.Query().Get("month")
+	year := r.URL.Query().Get("year")
+
+	var hashes []string
+
+	db.Table("sensor_data").Where("year(timestamp) = ? AND month(timestamp) = ?", year, month).Pluck("hash", &hashes);
+
+	respondJSON(w, http.StatusOK, hashes)
+
+}
+
 func GetSensorDataYear(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 
 	year := r.URL.Query().Get("year")
@@ -57,5 +70,17 @@ func GetSensorDataYear(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 				"avg(humidity) as humidity").Group("month(timestamp), sensor_id").Having("year(timestamp) = ?", year).Find(&sensordata)
 
 	respondJSON(w, http.StatusOK, sensordata)
+
+}
+
+func GetSensorDataYearHash(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
+
+	year := r.URL.Query().Get("year")
+
+	var hashes []string
+
+	db.Table("sensor_data").Where("year(timestamp) = ?", year).Pluck("hash", &hashes);
+
+	respondJSON(w, http.StatusOK, hashes)
 
 }
