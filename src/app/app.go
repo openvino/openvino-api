@@ -5,8 +5,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/gorilla/mux"
 	"github.com/gorilla/handlers"
+	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 
@@ -49,6 +49,7 @@ func (a *App) setRouters() {
 	})
 
 	// Routing for handling the projects
+	a.Get("/hashes", a.handleRequest(handler.GetSensorDataDayHash)).Queries("day", "{[1-31]*?}").Queries("month", "{[0-12]*?}").Queries("year", "{[0-2030]*?}")
 	a.Get("/hashes", a.handleRequest(handler.GetSensorDataMonthHash)).Queries("month", "{[0-12]*?}").Queries("year", "{[0-2030]*?}")
 	a.Get("/hashes", a.handleRequest(handler.GetSensorDataYearHash)).Queries("year", "{[0-2030]*?}")
 	a.Get("/sensor_data", a.handleRequest(handler.GetSensorDataDay)).Queries("day", "{[1-31]*?}").Queries("month", "{[0-12]*?}").Queries("year", "{[0-2030]*?}")
@@ -60,11 +61,11 @@ func (a *App) setRouters() {
 	a.Get("/buyer", a.handleRequest(handler.GetBuyers))
 
 	a.Router.Use(handlers.CORS(
-					handlers.AllowedHeaders([]string{"content-type"}),
-					handlers.AllowedOrigins([]string{"*"}),
-					handlers.AllowedMethods([]string{"GET", "POST", "OPTIONS"}),
-					handlers.AllowCredentials(),
-				));
+		handlers.AllowedHeaders([]string{"content-type"}),
+		handlers.AllowedOrigins([]string{"*"}),
+		handlers.AllowedMethods([]string{"GET", "POST", "OPTIONS"}),
+		handlers.AllowCredentials(),
+	))
 
 }
 
