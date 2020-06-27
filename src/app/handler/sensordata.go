@@ -19,7 +19,7 @@ func GetSensorDataDayHash(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 
 	var hashes []string
 
-	db.Table("sensor_data").Where("year(timestamp) = ? AND month(timestamp) = ? AND day(timestamp) = ?", year, month, day).Pluck("hash", &hashes)
+	db.Table("sensor_data").Where("year(timestamp) = ? AND month(timestamp) = ? AND day(timestamp) = ?", year, month, day).Order("timestamp desc").Pluck("hash", &hashes)
 
 	respondJSON(w, http.StatusOK, hashes)
 
@@ -64,7 +64,7 @@ func GetSensorDataMonthHash(db *gorm.DB, w http.ResponseWriter, r *http.Request)
 
 	var hashes []string
 
-	db.Table("sensor_data").Where("year(timestamp) = ? AND month(timestamp) = ?", year, month).Pluck("hash", &hashes)
+	db.Table("sensor_data").Where("year(timestamp) = ? AND month(timestamp) = ?", year, month).Order("timestamp desc").Pluck("hash", &hashes)
 
 	respondJSON(w, http.StatusOK, hashes)
 
