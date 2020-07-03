@@ -7,6 +7,12 @@ import (
 	"github.com/openvino/openvino-api/src/app/model"
 )
 
+func GetSensorDataHash(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
+	var hashes []string
+	db.Table("sensor_data").Order("timestamp desc").Pluck("hash", &hashes)
+	respondJSON(w, http.StatusOK, hashes)
+}
+
 func GetSensorDataWrong(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 	respondError(w, http.StatusBadRequest, "Malformed query")
 }

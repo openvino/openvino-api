@@ -49,9 +49,11 @@ func (a *App) setRouters() {
 	})
 
 	// Routing for handling the projects
+
 	a.Get("/hashes", a.handleRequest(handler.GetSensorDataDayHash)).Queries("day", "{[1-31]*?}").Queries("month", "{[0-12]*?}").Queries("year", "{[0-2030]*?}")
 	a.Get("/hashes", a.handleRequest(handler.GetSensorDataMonthHash)).Queries("month", "{[0-12]*?}").Queries("year", "{[0-2030]*?}")
 	a.Get("/hashes", a.handleRequest(handler.GetSensorDataYearHash)).Queries("year", "{[0-2030]*?}")
+	a.Get("/hashes", a.handleRequest(handler.GetSensorDataHash))
 	a.Get("/sensor_data", a.handleRequest(handler.GetSensorDataDay)).Queries("day", "{[1-31]*?}").Queries("month", "{[0-12]*?}").Queries("year", "{[0-2030]*?}")
 	a.Get("/sensor_data", a.handleRequest(handler.GetSensorDataMonth)).Queries("month", "{[1-12]*?}").Queries("year", "{[0-2030]*?}")
 	a.Get("/sensor_data", a.handleRequest(handler.GetSensorDataYear)).Queries("year", "{[2019-2030]*?}")
