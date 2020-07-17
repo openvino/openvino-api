@@ -54,13 +54,20 @@ func (a *App) setRouters() {
 	a.Get("/hashes", a.handleRequest(handler.GetSensorDataMonthHash)).Queries("month", "{[0-12]*?}").Queries("year", "{[0-2030]*?}")
 	a.Get("/hashes", a.handleRequest(handler.GetSensorDataYearHash)).Queries("year", "{[0-2030]*?}")
 	a.Get("/hashes", a.handleRequest(handler.GetSensorDataHash))
+
 	a.Get("/sensor_data", a.handleRequest(handler.GetSensorDataDay)).Queries("day", "{[1-31]*?}").Queries("month", "{[0-12]*?}").Queries("year", "{[0-2030]*?}")
 	a.Get("/sensor_data", a.handleRequest(handler.GetSensorDataMonth)).Queries("month", "{[1-12]*?}").Queries("year", "{[0-2030]*?}")
 	a.Get("/sensor_data", a.handleRequest(handler.GetSensorDataYear)).Queries("year", "{[2019-2030]*?}")
 	a.Get("/sensor_data", a.handleRequest(handler.GetSensorDataWrong))
+
 	a.Get("/root/{root}", a.handleRequest(handler.GetRoot))
+
 	a.Post("/buyer", a.handleRequest(handler.CreateBuyer))
 	a.Get("/buyer", a.handleRequest(handler.GetBuyers))
+
+	a.Post("/finalize_tasks", a.handleRequest(handler.UpdateTasks))
+	a.Post("/task", a.handleRequest(handler.CreateTask))
+	a.Get("/task", a.handleRequest(handler.GetTask))
 
 	a.Router.Use(handlers.CORS(
 		handlers.AllowedHeaders([]string{"content-type"}),
