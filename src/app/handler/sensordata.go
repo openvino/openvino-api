@@ -31,6 +31,14 @@ func GetSensorDataDayHash(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 
 }
 
+func GetSensorDataLast(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
+
+	sensordata := model.SensorData{}
+	db.First(&sensordata)
+	respondJSON(w, http.StatusOK, sensordata)
+
+}
+
 func GetSensorDataDay(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 
 	day := r.URL.Query().Get("day")
