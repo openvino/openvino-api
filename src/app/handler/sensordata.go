@@ -33,8 +33,16 @@ func GetSensorDataDayHash(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 
 func GetSensorDataLast(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 
-	sensordata := model.SensorData{}
-	db.Last(&sensordata)
+	sensordata_cs := model.SensorData{}
+	sensordata_pv := model.SensorData{}
+	sensordata_mo := model.SensorData{}
+	sensordata_me := model.SensorData{}
+	db.Where("sensor_id = ?", "petit-verdot").Order("timestamp asc").Limit(1).Find(&sensordata_pv)
+	db.Where("sensor_id = ?", "cabernet-sauvignon").Order("timestamp asc").Limit(1).Find(&sensordata_cs)
+	db.Where("sensor_id = ?", "malbec-este").Order("timestamp asc").Limit(1).Find(&sensordata_me)
+	db.Where("sensor_id = ?", "malbec-oeste").Order("timestamp asc").Limit(1).Find(&sensordata_mo)
+
+	sensordata := []model.SensorData{sensordata_cs, sensordata_pv, sensordata_mo, sensordata_me}
 	respondJSON(w, http.StatusOK, sensordata)
 
 }
