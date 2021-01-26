@@ -73,7 +73,7 @@ func GetSensorDataMonth(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 		"max(wind_velocity) as wind_velocity, max(wind_gust) as wind_gust,"+
 		"avg(wind_direction) as wind_direction, avg(pressure) as pressure,"+
 		"max(rain) as rain, avg(temperature) as temperature,"+
-		"avg(humidity) as humidity, max(irradiance_ir) as irradiance_ir"+
+		"avg(humidity) as humidity, max(irradiance_ir) as irradiance_ir,"+
         "max(irradiance_uv) as irradiance_uv, max(irradiance_vi) as irradiance_vi").Where("year(timestamp) = ? AND month(timestamp) = ?", year, month).Group("day(timestamp), sensor_id").Find(&sensordata)
 
 	respondJSON(w, http.StatusOK, sensordata)
@@ -105,7 +105,7 @@ func GetSensorDataYear(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 		"max(wind_velocity) as wind_velocity, max(wind_gust) as wind_gust,"+
 		"avg(wind_direction) as wind_direction, avg(pressure) as pressure,"+
 		"max(rain) as rain, avg(temperature) as temperature,"+
-		"avg(humidity) as humidity, max(irradiance_ir) as irradiance_ir"+
+		"avg(humidity) as humidity, max(irradiance_ir) as irradiance_ir,"+
 		"max(irradiance_uv) as irradiance_uv, max(irradiance_vi) as irradiance_vi").Group("month(timestamp), sensor_id").Having("year(timestamp) = ?", year).Find(&sensordata)
 
 	respondJSON(w, http.StatusOK, sensordata)
