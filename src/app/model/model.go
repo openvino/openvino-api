@@ -25,7 +25,9 @@ type SensorData struct {
 	Rain          float64 `json:"rain"`
 	Temperature   float64 `json:"temperature"`
 	Humidity      float64 `json:"humidity"`
-	Irradiance    float64 `json:"irradiance"`
+	IrradianceIR    float64 `json:"irradiance_ir"`
+	IrradianceUV    float64 `json:"irradiance_uv"`
+	IrradianceVI    float64 `json:"irradiance_vi"`
 }
 
 type Root struct {
