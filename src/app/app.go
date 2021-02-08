@@ -70,6 +70,8 @@ func (a *App) setRouters() {
 	a.Post("/task", a.handleRequest(handler.CreateTask))
 	a.Get("/task", a.handleRequest(handler.GetTask))
 
+	a.Get("/language/{lang}", a.handleRequest(handler.GetLanguage))
+
 	a.Router.Use(handlers.CORS(
 		handlers.AllowedHeaders([]string{"content-type"}),
 		handlers.AllowedOrigins([]string{"*"}),

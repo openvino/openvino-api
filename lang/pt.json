@@ -1,0 +1,65 @@
+{
+    "months": {
+        "0": "Janeiro",
+        "1": "Febereiro",
+        "2": "Março",
+        "3": "Abril",
+        "4": "Maio",
+        "5": "Junho",
+        "6": "Julho",
+        "7": "Agosto",
+        "8": "Setembro",
+        "9": "Outubro",
+        "10": "Novembro",
+        "11": "Dezembro"
+    },
+    "labels": {
+        "none": "Nenhum",
+        "day": "Dia",
+        "change": "Mudar",
+        "dry": "Seco",
+        "wet": "Molhado"
+    },
+    "selection": {
+        "title": "Comprar, Vender, y Trocar suas MTB*",
+        "subtitle": "A primeira criptomoeda do mundo apoiada por um delicioso vinho orgânico argentino!",
+        "know-more": "Saber mais"
+    },
+    "product": {
+        "redeem": {
+            "18": "6 Maio 2021",
+            "19": "6 Maio 2022",
+            "20": "6 Maio 2023"
+        },
+        "tabs": {
+            "sensoric": "Sensores",
+            "business": "Negócio",
+            "test1": "Test 1",
+            "test2": "Test 2"
+        },
+        "subsoil_humidity": {
+            "title": "Umidade do solo",
+            "zones": {
+                "petit_verdot": "Petit Verdot",
+                "cabernet_sauvignon": "Cabernet Sauvignon",
+                "malbec_oeste": "Malbec Oeste",
+                "malbec_este": "Malbec Leste"
+            }
+        },
+        "temperature": "Temperatura",
+        "wind-speed": "Velocidade do vento",
+        "wind-direction": "Direção do vento",
+        "solar": "Radiação solar",
+        "humidity": "Umidade",
+        "pressure": "Pressão",
+        "rain": "Chuva",
+        "irradiance-uv": "Irradiação solar (UV)",
+        "irradiance-vi": "Irradiação solar (VI)",
+        "irradiance-ir": "Irradiação solar (IR)"
+    },
+    "verifier": {
+        "label": "Verificar",
+        "success": "OK",
+        "error": "Erro"
+    }
+}

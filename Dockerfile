@@ -32,6 +32,7 @@ FROM alpine:3.11
 
 COPY --from=builder /dist/main /
 COPY wait-for-it.sh /
+COPY /lang/* /lang/
 
 RUN apk update && apk add bash
 
