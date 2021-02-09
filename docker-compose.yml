@@ -1,9 +1,9 @@
 version: '3.7'
 
 services:
-    coec-db:
+    openvino-db:
         image: mysql/mysql-server:latest
-        container_name: coec-database
+        container_name: openvino-database
         ports:
             - 3306:3306
         expose:
@@ -16,20 +16,20 @@ services:
         networks:
             - internal
         volumes:
-            - coec-db:/var/lib/mysql
+            - openvino-db:/var/lib/mysql
         restart: always
         
-    coec-api:
+    openvino-api:
         build:
             context: .
             dockerfile: Dockerfile
-        container_name: coec-api
+        container_name: openvino-api
         environment:
             - "ENVIRONMENT=${ENVIRONMENT}"
             - "API_PORT=${API_PORT}"
             - "DB_USERNAME=${DB_USERNAME}"
             - "DB_PASSWORD=${DB_PASSWORD}"
-            - "DB_HOST=coec-db"
+            - "DB_HOST=openvino-db"
             - "DB_PORT=3306"
             - "DB_NAME=${DB_NAME}"
             - "SECRET_AUTH=${SECRET_AUTH}"
@@ -45,10 +45,10 @@ services:
         expose:
             - "${API_PORT}"
         restart: always
-        command: ./wait-for-it.sh -t 0 coec-db:3306 -- ./main
+        command: ./wait-for-it.sh -t 0 openvino-db:3306 -- ./main
         
 networks:
     internal:
 
 volumes:
-    coec-db:
+    openvino-db:
