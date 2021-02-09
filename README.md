@@ -1,7 +1,6 @@
+# COEC - Golang API
 
-# Openvino - GoLang API for Sensoric
-
- GoLang API Projectwith Docker used for Openvino APIs to treat with sensoric data collected.
+Minimal GoLang API Project Structure with Docker used for Enchainte APIs
 
 ## Requirements
 
@@ -11,8 +10,8 @@
 ## Setup
 Clone this repository
 
-    git clone https://github.com/OpenVino/openvino-api
-    cd openvino-api
+    git clone https://github.com/openvino/openvino-api
+    cd coec-api
 
 Install Go dependencies
 
@@ -44,8 +43,8 @@ To run locally:
 
 To run on Docker (WIP) you have to modify the Dockerfile $database and the $port with the proper information and:
 
-    docker build -t openvino-api:latest .
-    docker run -ti openvino-api:latest -e ".env" 
+    docker build -t coec-api:latest .
+    docker run -ti coec-api:latest -e ".env" 
 
 To run using Docker-compose:
 

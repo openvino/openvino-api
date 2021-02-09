@@ -1,40 +1,43 @@
 version: '3.7'
 
 services:
-
-    openvino-db:
+    coec-db:
         image: mysql/mysql-server:latest
-        container_name: database
+        container_name: coec-database
         ports:
             - 3306:3306
         expose:
             - 3306
         environment:
-            - "MYSQL_ROOT_PASSWORD=${DATABASE_PASSWORD_ROOT}"
-            - "MYSQL_DATABASE=${DATABASE_NAME}"
-            - "MYSQL_USER=${DATABASE_USERNAME}"
-            - "MYSQL_PASSWORD=${DATABASE_PASSWORD}"
+            - "MYSQL_ROOT_PASSWORD=${DB_PASSWORD_ROOT}"
+            - "MYSQL_DATABASE=${DB_NAME}"
+            - "MYSQL_USER=${DB_USERNAME}"
+            - "MYSQL_PASSWORD=${DB_PASSWORD}"
         networks:
             - internal
         volumes:
-            - test-db:/var/lib/mysql
+            - coec-db:/var/lib/mysql
         restart: always
         
-    openvino-api:
+    coec-api:
         build:
             context: .
             dockerfile: Dockerfile
-        container_name: api
+        container_name: coec-api
         environment:
             - "ENVIRONMENT=${ENVIRONMENT}"
             - "API_PORT=${API_PORT}"
-            - "DATABASE_HOST=database"
-            - "DATABASE_PORT=3306"
-            - "DATABASE_DIALECT=mysql"
-            - "DATABASE_NAME=${DATABASE_NAME}"
-            - "DATABASE_CHARSET=${DATABASE_CHARSET}"
-            - "DATABASE_USERNAME=${DATABASE_USERNAME}"
-            - "DATABASE_PASSWORD=${DATABASE_PASSWORD}"
+            - "DB_USERNAME=${DB_USERNAME}"
+            - "DB_PASSWORD=${DB_PASSWORD}"
+            - "DB_HOST=coec-db"
+            - "DB_PORT=3306"
+            - "DB_NAME=${DB_NAME}"
+            - "SECRET_AUTH=${SECRET_AUTH}"
+            - "ETH_DEFAULT_ADMIN_PUBLIC=${ETH_DEFAULT_ADMIN_PUBLIC}"
+            - "ETH_DEFAULT_ADMIN_PRIVATE=${ETH_DEFAULT_ADMIN_PRIVATE}"
+            - "ETH_INFURA_SECRET=${ETH_INFURA_SECRET}"
+            - "ETH_NETWORK=${ETH_NETWORK}"
+            - "ETH_SMART_CONTRACT=${ETH_SMART_CONTRACT}"
         networks:
             - internal
         ports:
@@ -42,9 +45,10 @@ services:
         expose:
             - "${API_PORT}"
         restart: always
+        command: ./wait-for-it.sh -t 0 coec-db:3306 -- ./main
         
 networks:
     internal:
 
 volumes:
-    test-db:
+    coec-db:
