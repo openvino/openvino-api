@@ -27,12 +27,17 @@ func main() {
 		log.Panicf("Unable to connect to database: %s", err.Error())
 	}
 
-	repository.SetupETH(config.Config.Ethereum)
+	repository.Eth, err = repository.SetupETH(config.Config.Ethereum)
+	if err != nil {
+		log.Panicf("Unable to connect to infura: %s", err.Error())
+	}
 
 	log.Println("4. Migrating database model...")
-	repository.DB.AutoMigrate(&model.Sale{}, &model.SensorRecord{}, &model.User{}, &model.Task{}, &model.Tools{}, &model.Chemicals{})
+	repository.DB.AutoMigrate(
+		&model.Sale{}, &model.SensorRecord{}, &model.User{},
+		&model.Task{}, &model.Tools{}, &model.Chemicals{},
+		&model.RedeemInfo{}, &model.ShippingCost{})
 	defer repository.DB.Close()
-
 
 	log.Println("----------------------------")
 

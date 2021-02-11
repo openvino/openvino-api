@@ -22,9 +22,7 @@ var Routes = customHTTP.RoutePrefix{
 			Method:      http.MethodGet,
 			Pattern:     "",
 			HandlerFunc: GetSales,
-			Scopes:      []customHTTP.Scope{customHTTP.GuestScope},
+			Scopes:      []customHTTP.Scope{customHTTP.WorkerScope},
 		},
 	},
 }
-
-

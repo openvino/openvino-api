@@ -11,7 +11,6 @@ import (
 
 	"github.com/openvino/openvino-api/src/config"
 	customHTTP "github.com/openvino/openvino-api/src/http"
-
 )
 
 type authData struct {
@@ -28,10 +27,10 @@ func AuthHandler(w http.ResponseWriter, r *http.Request) {
 	authData.Expire = time.Now().UnixNano()/int64(time.Millisecond) + 900000
 	authData.Role = "Guest"
 
-	var domain, err = repository.GetDomain(authData.Address);
+	var domain, err = repository.GetDomain(authData.Address)
 	if err != nil {
-		customHTTP. NewErrorResponse(w, 400, "Wrong address")
-	} else if strings.Contains(domain, "costaflores") {
+		customHTTP.NewErrorResponse(w, 400, "Wrong address")
+	} else if strings.HasSuffix(domain, "rinkibino.eth") {
 		authData.Role = "Worker"
 	}
 

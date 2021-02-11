@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/openvino/openvino-api/src/controller/language"
+	"github.com/openvino/openvino-api/src/controller/redeem"
 	"github.com/openvino/openvino-api/src/controller/sale"
 	"github.com/openvino/openvino-api/src/controller/sensor"
 	"github.com/openvino/openvino-api/src/controller/task"
@@ -20,7 +21,7 @@ func NewRouter() *mux.Router {
 
 	router := mux.NewRouter()
 
-	customHTTP.AppRoutes = append(customHTTP.AppRoutes, health.Routes, auth.Routes, language.Routes, sale.Routes, sensor.Routes, task.Routes)
+	customHTTP.AppRoutes = append(customHTTP.AppRoutes, health.Routes, auth.Routes, language.Routes, sale.Routes, sensor.Routes, task.Routes, redeem.Routes)
 
 	for _, route := range customHTTP.AppRoutes {
 

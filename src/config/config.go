@@ -9,9 +9,9 @@ import (
 var Config Constants
 
 type EthereumConfig struct {
-	InfuraSecretKey     string
-	Network             string
-	ENS			        string
+	InfuraSecretKey string
+	Network         string
+	ENS             string
 }
 
 // DatabaseConfig - Database configuration variables
@@ -47,9 +47,9 @@ func New() Constants {
 			DatabaseName: getEnv("DB_NAME", "enchainte"),
 		},
 		Ethereum: EthereumConfig{
-			InfuraSecretKey:     getEnv("ETH_INFURA_SECRET", ""),
-			Network:             getEnv("ETH_NETWORK", ""),
-			ENS:       			 getEnv("ETH_ENS", ""),
+			InfuraSecretKey: getEnv("ETH_INFURA_SECRET", ""),
+			Network:         getEnv("ETH_NETWORK", ""),
+			ENS:             getEnv("ETH_ENS", "rinkibino.eth"),
 		},
 	}
 }

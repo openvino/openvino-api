@@ -15,7 +15,7 @@ var Routes = customHTTP.RoutePrefix{
 			Method:      http.MethodPost,
 			Pattern:     "",
 			HandlerFunc: CreateTask,
-			Scopes:      []customHTTP.Scope{customHTTP.GuestScope},
+			Scopes:      []customHTTP.Scope{customHTTP.WorkerScope},
 		},
 		{
 			Name:        "GetTasks",

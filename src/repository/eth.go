@@ -3,13 +3,11 @@ package repository
 import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
-	"github.com/wealdtech/go-ens/v3"
 	"github.com/openvino/openvino-api/src/config"
+	ens "github.com/wealdtech/go-ens/v3"
 )
 
-
 var Eth *ethclient.Client
-
 
 func SetupETH(config config.EthereumConfig) (*ethclient.Client, error) {
 
@@ -26,7 +24,7 @@ func SetupETH(config config.EthereumConfig) (*ethclient.Client, error) {
 
 func GetDomain(address string) (string, error) {
 
-	EthAddress := common.HexToAddress("0xe41d2489571d322189246dafa5ebde1f4699f498")
+	EthAddress := common.HexToAddress(address)
 
 	domain, err := ens.ReverseResolve(Eth, EthAddress)
 	if err != nil {
