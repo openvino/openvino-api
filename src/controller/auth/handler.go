@@ -3,11 +3,12 @@ package auth
 import (
 	"crypto"
 	"encoding/base64"
-	"github.com/openvino/openvino-api/src/repository"
 	"net/http"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/openvino/openvino-api/src/repository"
 
 	"github.com/openvino/openvino-api/src/config"
 	customHTTP "github.com/openvino/openvino-api/src/http"
@@ -26,15 +27,13 @@ func AuthHandler(w http.ResponseWriter, r *http.Request) {
 	authData.Address = r.URL.Query().Get("public_key")
 	authData.Expire = time.Now().UnixNano()/int64(time.Millisecond) + 900000
 	authData.Role = "Guest"
+	authData.Address = authData.Address[2:len(authData.Address)]
 
 	var domain, err = repository.GetDomain(authData.Address)
-	if err != nil {
-		customHTTP.NewErrorResponse(w, 400, "Wrong address")
-	} else if strings.HasSuffix(domain, "rinkibino.eth") {
+	if err == nil && strings.HasSuffix(domain, "rinkibino.eth") {
 		authData.Role = "Worker"
 	}
 
-	authData.Address = authData.Address[2:len(authData.Address)]
 	total := authData.Address + "$" +
 		strconv.FormatInt(authData.Expire, 10) + "$" +
 		authData.Role + "$" +

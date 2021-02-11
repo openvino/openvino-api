@@ -22,7 +22,7 @@ var Routes = customHTTP.RoutePrefix{
 			Method:      http.MethodGet,
 			Pattern:     "",
 			HandlerFunc: GetRedeemInfo,
-			Scopes:      []customHTTP.Scope{customHTTP.GuestScope},
+			Scopes:      []customHTTP.Scope{customHTTP.WorkerScope},
 		},
 		{
 			Name:        "GetShippingCosts",
