@@ -18,7 +18,7 @@ type CreateRedeem struct {
 	PublicKey  string `json:"public_key"`
 	Email      string `json:"email"`
 	Name       string `json:"name"`
-	Year       uint   `json:"year"`
+	Year       string `json:"year"`
 	Street     string `json:"street"`
 	Number     string `json:"number"`
 	CountryId  uint   `json:"country_id"`
@@ -41,7 +41,7 @@ func CreateReedemInfo(w http.ResponseWriter, r *http.Request) {
 		"name":        []string{"required", "string"},
 		"email":       []string{"required", "string"},
 		"amount":      []string{"required", "uint"},
-		"year":        []string{"required", "uint"},
+		"year":        []string{"required", "string"},
 		"street":      []string{"required", "string"},
 		"number":      []string{"required", "string"},
 		"country_id":  []string{"required", "uint"},

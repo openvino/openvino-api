@@ -7,7 +7,7 @@ type RedeemInfo struct {
 	gorm.Model
 	CustomerId string `json:"customer_id"`
 	Customer   User   `json:"customer" gorm:"foreignKey:CustomerId"`
-	Year       uint   `json:"year"`
+	Year       string `json:"year"`
 	Street     string `json:"street"`
 	Number     string `json:"number"`
 	CountryId  uint   `json:"country_id"`
