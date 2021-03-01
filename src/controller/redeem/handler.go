@@ -25,6 +25,9 @@ type CreateRedeem struct {
 	ProvinceId uint   `json:"province_id"`
 	Zip        string `json:"zip"`
 	TelegramId string `json:"telegram_id"`
+	Amount     uint   `json:"amount"`
+	Signature  string `json:"signature"`
+	TxHash     string `json:"tx_hash"`
 }
 
 type QueryRedeem struct {
@@ -45,6 +48,8 @@ func CreateReedemInfo(w http.ResponseWriter, r *http.Request) {
 		"province_id": []string{"required", "uint"},
 		"zip":         []string{"required", "string"},
 		"telegram_id": []string{"optional", "string"},
+		"tx_hash":     []string{"required", "string"},
+		"signature":   []string{"required", "string"},
 	}
 	err := customHTTP.DecodeJSONBody(w, r, &body, rules)
 	if err != nil {
@@ -57,7 +62,7 @@ func CreateReedemInfo(w http.ResponseWriter, r *http.Request) {
 		Email:     body.Email,
 	}
 	repository.DB.FirstOrCreate(&user, user)
-	sale := model.RedeemInfo{
+	redeem := model.RedeemInfo{
 		CustomerId: body.PublicKey,
 		Customer:   user,
 		Year:       body.Year,
@@ -67,8 +72,11 @@ func CreateReedemInfo(w http.ResponseWriter, r *http.Request) {
 		ProvinceId: body.ProvinceId,
 		Zip:        body.Zip,
 		TelegramId: body.TelegramId,
+		Amount:     body.Amount,
+		Signature:  body.Signature,
+		TxHash:     body.TxHash,
 	}
-	repository.DB.Create(&sale)
+	repository.DB.Create(&redeem)
 }
 
 func GetRedeemInfo(w http.ResponseWriter, r *http.Request) {

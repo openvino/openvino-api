@@ -14,6 +14,9 @@ type RedeemInfo struct {
 	ProvinceId uint   `json:"province_id"`
 	Zip        string `json:"zip"`
 	TelegramId string `json:"telegram_id"`
+	Amount     uint   `json:"amount"`
+	Signature  string `json:"signature"`
+	TxHash     string `json:"tx_hash"`
 }
 
 // Sale - Base GORM Model
