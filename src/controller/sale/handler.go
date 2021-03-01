@@ -32,7 +32,7 @@ func CreateSale(w http.ResponseWriter, r *http.Request) {
 	}
 	err := customHTTP.DecodeJSONBody(w, r, &body, rules)
 	if err != nil {
-		customHTTP.NewErrorResponse(w, http.StatusBadRequest, "Wrong query")
+		customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
 	}
 	user := model.User{
@@ -53,7 +53,7 @@ func GetSales(w http.ResponseWriter, r *http.Request) {
 	sales := []model.Sale{}
 	err := repository.DB.Preload("Customer").Find(&sales).Error
 	if err != nil {
-		customHTTP.NewErrorResponse(w, http.StatusBadRequest, "Wrong query")
+		customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
 	}
 	var sales_response []SaleResponse

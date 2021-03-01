@@ -90,7 +90,7 @@ func CreateTask(w http.ResponseWriter, r *http.Request) {
 	}
 	err := customHTTP.DecodeJSONBody(w, r, &body, rules)
 	if err != nil {
-		customHTTP.NewErrorResponse(w, http.StatusBadRequest, "Wrong query")
+		customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
 	}
 	task := model.Task{

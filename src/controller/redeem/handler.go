@@ -48,7 +48,7 @@ func CreateReedemInfo(w http.ResponseWriter, r *http.Request) {
 	}
 	err := customHTTP.DecodeJSONBody(w, r, &body, rules)
 	if err != nil {
-		customHTTP.NewErrorResponse(w, http.StatusBadRequest, "Wrong query")
+		customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
 	}
 	user := model.User{
@@ -81,13 +81,13 @@ func GetRedeemInfo(w http.ResponseWriter, r *http.Request) {
 			Preload("Customer").
 			Find(&redeems).Error
 		if err != nil {
-			customHTTP.NewErrorResponse(w, http.StatusBadRequest, "Wrong query")
+			customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
 			return
 		}
 	} else {
 		err := repository.DB.Preload("Customer").Find(&redeems).Error
 		if err != nil {
-			customHTTP.NewErrorResponse(w, http.StatusBadRequest, "Wrong query")
+			customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
 			return
 		}
 	}
@@ -104,10 +104,11 @@ func GetShippingCosts(w http.ResponseWriter, r *http.Request) {
 	err := repository.DB.
 		Where("country_id=? AND province_id=? AND amount >= ?",
 			params.CountryId, params.ProvinceId, params.Amount).
-		Order("ASC amount").
+		Order("amount asc").
 		First(&cost).Error
+
 	if err != nil {
-		customHTTP.NewErrorResponse(w, http.StatusBadRequest, "Wrong query")
+		customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
 	}
 	customHTTP.ResponseJSON(w, cost)
