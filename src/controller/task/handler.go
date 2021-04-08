@@ -5,7 +5,6 @@ import (
 	"github.com/openvino/openvino-api/src/model"
 	"github.com/openvino/openvino-api/src/repository"
 	"github.com/thedevsaddam/govalidator"
-	"log"
 	"net/http"
 	"time"
 )
@@ -47,23 +46,24 @@ func GetTasks(w http.ResponseWriter, r *http.Request) {
 	params.Day = r.URL.Query().Get("day")
 	params.PublicKey = r.URL.Query().Get("public_key")
 
-	log.Println(params)
-
 	tasks := []model.Task{}
 
 	query := repository.DB
 
-	if params.Harvest != "" {
-		query.Where("YEAR(ini_timestamp) = ?", params.Harvest)
-	} else if params.Month != "" {
-		query.Where("MONTH(ini_timestamp) = ?", params.Month)
-	} else if params.Day != "" {
-		query.Where("DAY(ini_timestamp) = ?", params.Day)
-	} else if params.PublicKey != "" {
-		query.Where("public_key = ?", params.PublicKey)
+	if params.Day == "" && params.Month == "" && params.Harvest != "" {
+		query = query.Where("YEAR(ini_timestamp) = ?", params.Harvest)
 	}
-	query.Preload("ToolsUsed").Preload("ChemicalsUsed").Find(&tasks)
+	if params.Month != "" {
+		query = query.Where("MONTH(ini_timestamp) = ?", params.Month)
+	}
+	if params.Day != "" {
+		query = query.Where("DAY(ini_timestamp) = ?", params.Day)
+	}
+	if params.PublicKey != "" {
+		query = query.Where("public_key = ?", params.PublicKey)
+	}
 
+	query.Preload("ToolsUsed").Preload("ChemicalsUsed").Find(&tasks)
 	customHTTP.ResponseJSON(w, tasks)
 	return
 }
@@ -122,8 +122,6 @@ func CreateTask(w http.ResponseWriter, r *http.Request) {
 			TaskHash: body.Hash,
 		})
 	}
-
-	log.Println(task)
 
 	repository.DB.Create(task)
 
