@@ -1,11 +1,12 @@
 package redeem
 
 import (
+	"net/http"
+
 	customHTTP "github.com/openvino/openvino-api/src/http"
 	"github.com/openvino/openvino-api/src/model"
 	"github.com/openvino/openvino-api/src/repository"
 	"github.com/thedevsaddam/govalidator"
-	"net/http"
 )
 
 type QueryShipping struct {
@@ -15,19 +16,20 @@ type QueryShipping struct {
 }
 
 type CreateRedeem struct {
-	PublicKey  string `json:"public_key"`
-	Email      string `json:"email"`
-	Name       string `json:"name"`
-	Year       string `json:"year"`
-	Street     string `json:"street"`
-	Number     string `json:"number"`
-	CountryId  uint   `json:"country_id"`
-	ProvinceId uint   `json:"province_id"`
-	Zip        string `json:"zip"`
-	TelegramId string `json:"telegram_id"`
-	Amount     uint   `json:"amount"`
-	Signature  string `json:"signature"`
-	TxHash     string `json:"tx_hash"`
+	PublicKey      string `json:"public_key"`
+	Email          string `json:"email"`
+	Name           string `json:"name"`
+	Year           string `json:"year"`
+	Street         string `json:"street"`
+	Number         string `json:"number"`
+	CountryId      uint   `json:"country_id"`
+	ProvinceId     uint   `json:"province_id"`
+	Zip            string `json:"zip"`
+	TelegramId     string `json:"telegram_id"`
+	Amount         uint   `json:"amount"`
+	Signature      string `json:"signature"`
+	BurnTxHash     string `json:"burn_tx_hash"`
+	ShippingTxHash string `json:"shipping_tx_hash"`
 }
 
 type QueryRedeem struct {
@@ -37,19 +39,20 @@ type QueryRedeem struct {
 func CreateReedemInfo(w http.ResponseWriter, r *http.Request) {
 	var body CreateRedeem
 	rules := govalidator.MapData{
-		"public_key":  []string{"required", "string"},
-		"name":        []string{"required", "string"},
-		"email":       []string{"required", "string"},
-		"amount":      []string{"required", "uint"},
-		"year":        []string{"required", "string"},
-		"street":      []string{"required", "string"},
-		"number":      []string{"required", "string"},
-		"country_id":  []string{"required", "uint"},
-		"province_id": []string{"required", "uint"},
-		"zip":         []string{"required", "string"},
-		"telegram_id": []string{"optional", "string"},
-		"tx_hash":     []string{"required", "string"},
-		"signature":   []string{"required", "string"},
+		"public_key":       []string{"required", "string"},
+		"name":             []string{"required", "string"},
+		"email":            []string{"required", "string"},
+		"amount":           []string{"required", "uint"},
+		"year":             []string{"required", "string"},
+		"street":           []string{"required", "string"},
+		"number":           []string{"required", "string"},
+		"country_id":       []string{"required", "uint"},
+		"province_id":      []string{"required", "uint"},
+		"zip":              []string{"required", "string"},
+		"telegram_id":      []string{"optional", "string"},
+		"burn_tx_hash":     []string{"required", "string"},
+		"shipping_tx_hash": []string{"required", "string"},
+		"signature":        []string{"required", "string"},
 	}
 	err := customHTTP.DecodeJSONBody(w, r, &body, rules)
 	if err != nil {
@@ -63,18 +66,19 @@ func CreateReedemInfo(w http.ResponseWriter, r *http.Request) {
 	}
 	repository.DB.FirstOrCreate(&user, user)
 	redeem := model.RedeemInfo{
-		CustomerId: body.PublicKey,
-		Customer:   user,
-		Year:       body.Year,
-		Street:     body.Street,
-		Number:     body.Number,
-		CountryId:  body.CountryId,
-		ProvinceId: body.ProvinceId,
-		Zip:        body.Zip,
-		TelegramId: body.TelegramId,
-		Amount:     body.Amount,
-		Signature:  body.Signature,
-		TxHash:     body.TxHash,
+		CustomerId:     body.PublicKey,
+		Customer:       user,
+		Year:           body.Year,
+		Street:         body.Street,
+		Number:         body.Number,
+		CountryId:      body.CountryId,
+		ProvinceId:     body.ProvinceId,
+		Zip:            body.Zip,
+		TelegramId:     body.TelegramId,
+		Amount:         body.Amount,
+		Signature:      body.Signature,
+		BurnTxHash:     body.BurnTxHash,
+		ShippingTxHash: body.ShippingTxHash,
 	}
 	repository.DB.Create(&redeem)
 }
