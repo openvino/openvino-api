@@ -30,7 +30,7 @@ func AuthHandler(w http.ResponseWriter, r *http.Request) {
 	authData.Address = authData.Address[2:len(authData.Address)]
 
 	var domain, err = repository.GetDomain(authData.Address)
-	if err == nil && strings.HasSuffix(domain, "rinkibino.eth") {
+	if err == nil && strings.HasSuffix(domain, "rinkivino.eth") {
 		authData.Role = "Worker"
 	}
 
