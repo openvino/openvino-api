@@ -18,7 +18,11 @@
         "day": "Día",
         "change": "Cambiar",
         "dry": "Seco",
-        "wet": "Mojado"
+        "wet": "Mojado",
+	"buy": "Comprar",
+        "sell": "Vender",
+        "redeem": "Redimir",
+        "pay": "Pagar"
     },
     "selection": {
         "title": "Comprar, Vender y Cambiar sus MTB*",
@@ -27,12 +31,14 @@
     },
     "product": {
         "redeem": {
-            "18": "6 Mayo 2021",
-            "19": "6 Mayo 2022",
-            "20": "6 Mayo 2023"
+            "18": "6 de mayo del 2021",
+            "19": "6 de mayo del 2022",
+            "20": "6 de mayo del 2023",
+            "21": "6 de mayo del 2024"
         },
         "tabs": {
             "sensoric": "Sensores",
+            "work": "Tareas",
             "business": "Negocio",
             "test1": "Test 1",
             "test2": "Test 2"
@@ -57,9 +63,279 @@
         "irradiance-vi": "Irradiación solar (VI)",
         "irradiance-ir": "Irradiación solar (IR)"
     },
+    "sensors": {
+        "title": "Costaflores Organic Vineyard",
+        "dashboard": {
+            "location": "Localización",
+            "lastImage": "Última imagen",
+            "timelapse": "Timelapse",
+            "livestream": "Livestream",
+            "lastUpdate": "Última actualización",
+            "temperature": "Temperatura",
+            "relativeHumidity": "RH",
+            "wind": "Viento",
+            "windDirection": "Dirección del viento",
+            "solarUV": "Irradiación solar (UV)",
+            "solarVI": "Irradiación solar (VI)",
+            "solarIR": "Irradiación solar (IR)",
+            "pressure": "Presión",
+            "inputMolecules": "Input molecules",
+            "co": "CO",
+            "s": "S",
+            "guano": "Guano",
+            "h2o": "H2O",
+            "grapeStatus": "Estado de la uva",
+            "mbo": "MBO",
+            "ph": "pH",
+            "bx": "BX",
+            "ta": "TA",
+            "mbe": "MBE",
+            "pv": "PV",
+            "kg": "KG",
+            "cs": "CS"
+        }
+    },
+    "tasks": {
+        "title": "¿Qué contiene una botella de MTB?",
+        "list": "Lista de tareas",
+        "emptyList": "No hay tareas disponibles",
+        "details": {
+            "title": "Detalle de tarea",
+            "tools": "Herramientas",
+            "chemicals": "Químicos",
+            "startDate": "Fecha inicio",
+            "endDate": "Fecha fin",
+            "notes": "Notas",
+            "startLocation": "Localización inicial",
+            "endLocation": "Localización final"
+        },
+        "types": {
+            "0": {
+                "title": "Desorillar",
+                "description": "Abrir surcos"
+            },
+            "1": {
+                "title": "Tapar",
+                "description": "Cuando cerramos los surcos"
+            },
+            "2": {
+                "title": "Cambiar palos",
+                "description": "Cambiar los palos rotos de la finca"
+            },
+            "3": {
+                "title": "Zapear",
+                "description": "Zapear todos los yuyos cerca de la planta"
+            },
+            "4": {
+                "title": "Desbrotar",
+                "description": "Eliminar los brotes nuevos que salen del tronco de la cepa"
+            },
+            "5": {
+                "title": "Atar",
+                "description": "Atar los sarmientos después de podadas las viñas"
+            },
+            "6": {
+                "title": "Podar",
+                "description": "Cortar de una cepa en cierta medida para regular y aumentar la producción y dar una determinada forma a la misma"
+            },
+            "7": {
+                "title": "Desmalezar",
+                "description": "utilizar la maquina para limpiar la finca"
+            },
+            "8": {
+                "title": "Pintar los cortes",
+                "description": "Pintar los cortes despues de la poda"
+            },
+            "9": {
+                "title": "Regar",
+                "description": "Se riega a través de la agua que viene del canal"
+            },
+            "10": {
+                "title": "Cruzar",
+                "description": "Cruzar los brotes caidos"
+            },
+            "11": {
+                "title": "Despampanar",
+                "description": "Cortar las puntas de la planta"
+            },
+            "12": {
+                "title": "Ralear",
+                "description": "Cortar y sacar algunos racimos de uva"
+            },
+            "13": {
+                "title": "Cosechar",
+                "description": "Cortar y sacar todos los racimos de uva"
+            },
+            "14": {
+                "title": "Curar",
+                "description": "Aplicar productos a la planta"
+            }
+        },
+        "chemicals": {
+            "1": "Oxicloruro de Cobre (Cu)",
+            "2": "Azufre (So)",
+            "3": "Tierra de Diatomea",
+            "4": "Bacillus thuringiensis (BT)"
+        },
+        "tools": {
+            "1": "Tractor",
+            "2": "Tenaza",
+            "3": "Pala",
+            "4": "Zapa",
+            "5": "Guantes",
+            "6": "Tijera de poda",
+            "7": "Tijera de cosecha",
+            "8": "Lentes",
+            "9": "Mochila de curación",
+            "10": "Machete",
+            "11": "Tacho de cosecha",
+            "12": "Cincel",
+            "13": "Arado",
+            "14": "Subsolador", 
+            "15": "Tanque de curación",
+            "16": "Brocha"
+        },
+        "locations": {
+            "zones": {
+                "malbec": "Malbec",
+                "petit-verdot": "Petit Verdot",
+                "cabernet-sauvignon": "Cabernet Sauvignon"
+            }
+           
+        }
+    },
     "verifier": {
         "label": "Verificar",
         "success": "OK",
         "error": "Error"
+    },
+    "wallet": {
+        "email": "Email",
+        "your-email": "Tu email",
+        "connect": "Conectar wallet",
+        "invalid-amount": "Cantidad invalida",
+        "invalid-trade": "Intercambio invalido",
+        "no-allowance": "Set Allowance to Continue",
+        "no-eth": "No hay suficiente ETH",
+        "no-tokens": "No hay suficientes tokens",
+        "not-available": "No disponible",
+        "unknown-error": "Error desconocido",
+        "loading": "Cargando...",
+        "waiting-confirmation": "Esperando confirmación",
+        "buy-wine": "Comprar vino",
+        "sell-wine": "Vender vino",
+        "pay": "Pagar",
+        "sell": "Vender",
+        "crowdsale": "Crowdsale",
+        "available": "Disponible",
+        "pending-transaction": "Tu transacción está pendiente",
+        "view-etherscan": "Ver en Etherscan.",
+        "what-to-receive": "¿Qué token quieres recibir?",
+        "what-to-pay": "¿Como quieres pagar?",
+        "unlock": "Desbloquear",
+        "unlock-token": "Token desbloqueado!",
+        "you-got-tokens": "Has recibido {{amount}} {{token}}!",
+        "transaction-details": "Detalle de transacción",
+        "redeem-token": "Canjear {{token}}",
+        "redeem-your-token": "Canjea tus {{token}} ahora",
+        "sold-wine": "Has vendido vino!",
+        "browser-wallet": "Wallet del navegador",
+        "wallet-connect": "Wallet Connect",
+        "scan-to-connect": "Escanear para conectar",
+        "learn-more": "Aprende más",
+        "dont-have-one": "¿No tienes ninguno?",
+        "connection-error": "Error de conexión",
+        "you-own": "Tienes {{amount}}",
+        "redeem-message": "Puede canjear sus tokens {{token}} por botellas de vino, a partir del {{date}}."
+    },
+    "info": {
+        "1": "Cómo funciona:",
+        "2": "Un token {{token}} le da derecho a una botella de delicioso vino orgánico argentino (Mike Tango Bravo {{year}} - un corte de Malbec / Petit Verdot / Cabernet Sauvignon) de <0>Costaflores Organic Vineyard</0>.",
+        "3": "Mire <0>aquí</0> para comprender cómo funciona todo el proceso <1>OpenVino</1>.",
+        "4": "Puede volver a vender su token en cualquier momento y, a partir del {{date}}, puede canjear su token {{token}} por 1 botella de vino.",
+        "5": "Cómo se valora:",
+        "6": "Cada compra / venta moverá el precio. El aumento o disminución sigue el bonding curve de Uniswap. Entonces, el precio de nuestros vinos está definido por la oferta y la demanda, y la valoración cambia con el tiempo ... <0>¡como un buen vino!</0>",
+        "7": "Obtenga más información sobre cómo funciona Uniswap.",
+        "8": "Vea el funcionamiento del proyecto OpenVino.",
+        "9": "Únete a nuestro grupo de Telegram.",
+        "10": "Ponerse en contacto."
+    },
+    "redeem": {
+        "name": "Name",
+        "line1": "Street Address",
+        "line2": "Unit",
+        "city": "City",
+        "state": "State",
+        "zip": "ZIP code",
+        "country": "Country",
+        "email": "Email",
+        "address": "Ethereum Address",
+        "timestamp": "Time",
+        "numberBurned": "Token Redeemed",
+        "telegram": "Telegram ID",
+        "next": "Next",
+        "shipping-cost": "Calculated shipping costs",
+        "place-order": "Place order",
+        "you-got-wine": "You got wine!",
+        "estimated-time": "Estimated shipping time 2-3 weeks. Shipping time will vary by region.",
+        "burn": "Burn",
+        "transfer-shipping-costs": "Transfer shipping costs",
+        "shipping-cost-not-found": "We currently do not support shipping to this province.",
+	"countries": {
+            "1": {
+                "name": "España",
+                "province": {
+                    "1": "Andalucía",
+                    "2": "Aragón",
+                    "3": "Asturias",
+                    "4": "Islas Baleares",
+                    "5": "Canarias",
+                    "6": "Cantabria",
+                    "7": "Castilla La Mancha",
+                    "8": "Castilla y León",
+		    "9": "Catalunya",
+                    "10": "Valencia",
+                    "11": "Extremadura",
+                    "12": "Galicia",
+                    "13": "La Rioja",
+                    "14": "Madrid",
+                    "15": "Murcia",
+                    "16": "Navarra",
+                    "17": "País Vasco",
+                    "18": "Ceuta",
+		    "19": "Melilla"
+                }
+            },
+            "2": {
+                "name": "Argentina",
+                "province": {
+                    "1": "Mendoza",
+                    "2": "CABA",
+                    "3": "Buenos Aires",
+                    "4": "Costaflores",
+                    "5": "Catamarca",
+                    "6": "Chaco",
+                    "7": "Chubut",
+                    "8": "Córdoba",
+                    "9": "Corrientes",
+                    "10": "Entre Ríos",
+                    "11": "Formosa",
+                    "12": "Jujuy",
+                    "13": "La Pampa",
+                    "14": "La Rioja",
+                    "15": "Misiones",
+                    "16": "Neuquén",
+                    "17": "Rio Negro",
+                    "18": "Salta",
+                    "19": "San Juan",
+                    "20": "San Luis",
+                    "21": "Santa Cruz",
+                    "22": "Santa Fé",
+                    "23": "Santiago del Estero",
+                    "24": "Tierra del Fuego",
+                    "25": "Tucuman"
+                }
+            }
+        }
     }
 }
