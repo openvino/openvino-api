@@ -63,7 +63,7 @@ func GetTasks(w http.ResponseWriter, r *http.Request) {
 		query = query.Where("public_key = ?", params.PublicKey)
 	}
 
-	query.Preload("ToolsUsed").Preload("ChemicalsUsed").Find(&tasks)
+	query.Preload("ToolsUsed").Preload("ChemicalsUsed").Order("ini_timestamp desc").Find(&tasks)
 	customHTTP.ResponseJSON(w, tasks)
 	return
 }
