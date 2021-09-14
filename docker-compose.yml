@@ -25,19 +25,19 @@ services:
             dockerfile: Dockerfile
         container_name: openvino-api
         environment:
-            - "ENVIRONMENT=${ENVIRONMENT}"
-            - "API_PORT=${API_PORT}"
-            - "DB_USERNAME=${DB_USERNAME}"
-            - "DB_PASSWORD=${DB_PASSWORD}"
-            - "DB_HOST=openvino-db"
-            - "DB_PORT=3306"
-            - "DB_NAME=${DB_NAME}"
-            - "SECRET_AUTH=${SECRET_AUTH}"
-            - "ETH_DEFAULT_ADMIN_PUBLIC=${ETH_DEFAULT_ADMIN_PUBLIC}"
-            - "ETH_DEFAULT_ADMIN_PRIVATE=${ETH_DEFAULT_ADMIN_PRIVATE}"
-            - "ETH_INFURA_SECRET=${ETH_INFURA_SECRET}"
-            - "ETH_NETWORK=${ETH_NETWORK}"
-            - "ETH_SMART_CONTRACT=${ETH_SMART_CONTRACT}"
+                - "ENVIRONMENT=${ENVIRONMENT}"
+                - "API_PORT=${API_PORT}"
+                - "DB_USERNAME=${DB_USERNAME}"
+                - "DB_PASSWORD=${DB_PASSWORD}"
+                - "DB_HOST=openvino-db"
+                - "DB_PORT=3306"
+                - "DB_NAME=${DB_NAME}"
+                - "SECRET_AUTH=${SECRET_AUTH}"
+                - "ETH_DEFAULT_ADMIN_PUBLIC=${ETH_DEFAULT_ADMIN_PUBLIC}"
+                - "ETH_DEFAULT_ADMIN_PRIVATE=${ETH_DEFAULT_ADMIN_PRIVATE}"
+                - "ETH_INFURA_SECRET=${ETH_INFURA_SECRET}"
+                - "ETH_NETWORK=${ETH_NETWORK}"
+                - "ETH_SMART_CONTRACT=${ETH_SMART_CONTRACT}"
         networks:
             - internal
         ports:
