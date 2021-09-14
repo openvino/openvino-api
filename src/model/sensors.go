@@ -4,7 +4,7 @@ import "time"
 
 // SensorRecord - Base GORM Model
 type SensorRecord struct {
-	Hash      string     `gorm: "primary_key" json:"hash"`
+	Hash      string     `gorm:"primary_key" json:"hash"`
 	Timestamp *time.Time `json:"timestamp"`
 
 	SensorId string `json:"sensor_id"`
