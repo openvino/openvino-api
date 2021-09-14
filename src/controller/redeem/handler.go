@@ -2,6 +2,7 @@ package redeem
 
 import (
 	"net/http"
+	"strconv"
 
 	customHTTP "github.com/openvino/openvino-api/src/http"
 	"github.com/openvino/openvino-api/src/model"
@@ -12,7 +13,7 @@ import (
 type QueryShipping struct {
 	CountryId  string `json:"country_id"`
 	ProvinceId string `json:"province_id"`
-	Amount     string `json:"amount"`
+	Amount     uint   `json:"amount"`
 }
 
 type CreateRedeem struct {
@@ -34,6 +35,10 @@ type CreateRedeem struct {
 
 type QueryRedeem struct {
 	Year string `json:"year"`
+}
+
+type ShippingCostResponse struct {
+	Cost float32 `json:"cost"`
 }
 
 func CreateReedemInfo(w http.ResponseWriter, r *http.Request) {
@@ -112,17 +117,25 @@ func GetShippingCosts(w http.ResponseWriter, r *http.Request) {
 	var params = QueryShipping{}
 	params.CountryId = r.URL.Query().Get("country_id")
 	params.ProvinceId = r.URL.Query().Get("province_id")
-	params.Amount = r.URL.Query().Get("amount")
-	err := repository.DB.
-		Where("country_id=? AND province_id=? AND amount >= ?",
-			params.CountryId, params.ProvinceId, params.Amount).
-		Order("amount asc").
+	amount, err := strconv.ParseUint(r.URL.Query().Get("amount"), 10, 32)
+
+	if err != nil || params.CountryId == "" || params.ProvinceId == "" {
+		customHTTP.NewErrorResponse(w, http.StatusBadRequest, "The provided params are incorrect")
+		return
+	}
+	params.Amount = uint(amount)
+	err = repository.DB.
+		Where("country_id=? AND province_id=?",
+			params.CountryId, params.ProvinceId).
 		First(&cost).Error
 
 	if err != nil {
 		customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
 	}
-	customHTTP.ResponseJSON(w, cost)
+	costReturn := ShippingCostResponse{
+		Cost: cost.BaseCost + (cost.CostPerUnit * (float32(params.Amount) - 6.0)),
+	}
+	customHTTP.ResponseJSON(w, costReturn)
 	return
 }

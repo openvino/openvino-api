@@ -36,7 +36,7 @@ func main() {
 	repository.DB.AutoMigrate(
 		&model.Sale{}, &model.SensorRecord{}, &model.User{},
 		&model.Task{}, &model.Tools{}, &model.Chemicals{},
-		&model.RedeemInfo{}, &model.ShippingCost{}, &model.AnalysisInfo{})
+		&model.RedeemInfo{}, &model.ShippingCost{}, &model.AnalysisInfo{}, &model.Expense{}, &model.Token{})
 	defer repository.DB.Close()
 
 	log.Println("----------------------------")

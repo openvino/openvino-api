@@ -23,8 +23,8 @@ type RedeemInfo struct {
 // Sale - Base GORM Model
 type ShippingCost struct {
 	gorm.Model
-	CountryId  uint    `json:"country_id"`
-	ProvinceId uint    `json:"province_id"`
-	Amount     uint    `json:"amount"`
-	Cost       float32 `json:"cost"`
+	CountryId   uint    `json:"country_id"`
+	ProvinceId  uint    `json:"province_id"`
+	BaseCost    float32 `json:"base_cost"`
+	CostPerUnit float32 `json:"cost_per_unit"`
 }

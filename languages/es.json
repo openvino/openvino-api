@@ -337,5 +337,9 @@
                 }
             }
         }
+    },
+    "expenses": {
+        "1": "Example expense 1",
+        "2": "Example expense 2"
     }
 }
