@@ -134,7 +134,7 @@ func GetShippingCosts(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	costReturn := ShippingCostResponse{
-		Cost: cost.BaseCost + (cost.CostPerUnit * (float32(params.Amount) - 6.0)),
+		Cost: (cost.BaseCost * float32(params.Amount) / 6.0) + (cost.CostPerUnit * float32(params.Amount)),
 	}
 	customHTTP.ResponseJSON(w, costReturn)
 	return

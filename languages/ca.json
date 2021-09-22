@@ -197,7 +197,13 @@
         }
     },
     "expenses": {
-        "1": "Example expense 1",
-        "2": "Example expense 2"
+        "categories": {
+            "0": "Grape cultivation",
+            "1": "Wine production",
+            "2": "Packaging",
+            "3": "Logistics",
+            "4": "Administration",
+            "5": "Marketing and communication"
+        }
     }
 }

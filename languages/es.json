@@ -232,6 +232,14 @@
     }
   },
   "tasks": {
+    "categories": {
+      "0": "Cultivo",
+      "1": "Producción de vino",
+      "2": "Empaquetado",
+      "3": "Logística",
+      "4": "Administración",
+      "5": "Márqueting y comunicación"
+    },
     "labels": {
       "type": "Tipo de tarea",
       "tools": "Herramientas",
@@ -372,6 +380,16 @@
     },
     "new": {
       "title": "Crear nueva tarea"
+    }
+  },
+  "expenses": {
+    "categories": {
+      "0": "Cultivo",
+      "1": "Producción de vino",
+      "2": "Empaquetado",
+      "3": "Logística",
+      "4": "Administración",
+      "5": "Márqueting y comunicación"
     }
   }
 }

@@ -232,6 +232,14 @@
     }
   },
   "tasks": {
+    "categories": {
+      "0": "Grape cultivation",
+      "1": "Wine production",
+      "2": "Packaging",
+      "3": "Logistics",
+      "4": "Administration",
+      "5": "Marketing and communication"
+    },
     "labels": {
       "type": "Task type",
       "tools": "Tools",
@@ -372,6 +380,16 @@
     },
     "new": {
       "title": "Create new task"
+    }
+  },
+  "expenses": {
+    "categories": {
+      "0": "Grape cultivation",
+      "1": "Wine production",
+      "2": "Packaging",
+      "3": "Logistics",
+      "4": "Administration",
+      "5": "Marketing and communication"
     }
   }
 }
