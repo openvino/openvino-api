@@ -27,6 +27,7 @@ type InsertData struct {
 	EndClaro        string     `json:"end_claro"`
 	EndRow          uint       `json:"end_row"`
 	EndPlant        uint       `json:"end_plant"`
+	CategoryId      uint       `json:"category_id"`
 	TypeId          uint       `json:"task_id"`
 	ToolsUsed       []uint     `json:"tools_used"`
 	Chemicals       []uint     `json:"chemicals"`
@@ -82,6 +83,7 @@ func CreateTask(w http.ResponseWriter, r *http.Request) {
 		"end_claro":        []string{"required", "string"},
 		"end_row":          []string{"required", "uint"},
 		"end_plant":        []string{"required", "uint"},
+		"category_id":      []string{"required", "uint"},
 		"task_id":          []string{"required", "uint"},
 		"tools_used":       []string{"required", "[]uint"},
 		"chemicals":        []string{"required", "[]string"},
@@ -104,6 +106,7 @@ func CreateTask(w http.ResponseWriter, r *http.Request) {
 		EndClaro:     body.EndClaro,
 		EndRow:       body.EndRow,
 		EndPlant:     body.EndPlant,
+		CategoryId:   body.CategoryId,
 		TypeId:       body.TypeId,
 		Notes:        body.Notes,
 	}
