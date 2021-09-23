@@ -241,6 +241,7 @@
       "5": "Marketing and communication"
     },
     "labels": {
+      "categories": "Category",
       "type": "Task type",
       "tools": "Tools",
       "chemicals": "Chemicals",

@@ -241,6 +241,7 @@
       "5": "Márqueting y comunicación"
     },
     "labels": {
+      "categories": "Categoría",
       "type": "Tipo de tarea",
       "tools": "Herramientas",
       "chemicals": "Químicos",
