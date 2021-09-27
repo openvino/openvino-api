@@ -86,8 +86,8 @@ func CreateTask(w http.ResponseWriter, r *http.Request) {
 		"category_id":      []string{"required", "uint"},
 		"task_id":          []string{"required", "uint"},
 		"tools_used":       []string{"required", "[]uint"},
-		"chemicals":        []string{"required", "[]string"},
-		"chemicals_amount": []string{"required", "[]float32"},
+		"chemicals":        []string{"optional", "[]string"},
+		"chemicals_amount": []string{"optional", "[]float32"},
 		"notes":            []string{"optional", "string"},
 	}
 	err := customHTTP.DecodeJSONBody(w, r, &body, rules)
