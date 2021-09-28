@@ -47,7 +47,7 @@ func GetExpenses(w http.ResponseWriter, r *http.Request) {
 	query := repository.DB
 
 	if params.Token != "" {
-		query = query.Where("token = ?", params.Token)
+		query = query.Where("token = ? OR token = 0", params.Token)
 	}
 
 	if params.Category != "" {
