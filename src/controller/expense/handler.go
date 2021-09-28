@@ -10,9 +10,8 @@ import (
 )
 
 type QueryData struct {
-	Token string `json:"token_id"`
-	Month string `json:"month"`
-	Day   string `json:"day"`
+	Token    string `json:"token_id"`
+	Category string `json:"category_id"`
 }
 
 type InsertData struct {
@@ -37,8 +36,7 @@ func GetExpenses(w http.ResponseWriter, r *http.Request) {
 
 	var params = QueryData{}
 	params.Token = r.URL.Query().Get("token_id")
-	params.Month = r.URL.Query().Get("month")
-	params.Day = r.URL.Query().Get("day")
+	params.Category = r.URL.Query().Get("category_id")
 
 	if params.Token == "" {
 		customHTTP.NewErrorResponse(w, http.StatusBadRequest, "The query has to specify at least a token_id")
@@ -49,13 +47,11 @@ func GetExpenses(w http.ResponseWriter, r *http.Request) {
 	query := repository.DB
 
 	if params.Token != "" {
-		query = query.Where("YEAR(timestamp) = ?", params.Token)
+		query = query.Where("token = ?", params.Token)
 	}
-	if params.Month != "" {
-		query = query.Where("MONTH(timestamp) = ?", params.Month)
-	}
-	if params.Day != "" {
-		query = query.Where("DAY(timestamp) = ?", params.Day)
+
+	if params.Category != "" {
+		query = query.Where("type_id = ?", params.Category)
 	}
 
 	query.Order("timestamp desc").Find(&expenses)
