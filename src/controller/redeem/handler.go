@@ -1,6 +1,7 @@
 package redeem
 
 import (
+	"math"
 	"net/http"
 	"strconv"
 
@@ -123,7 +124,9 @@ func GetShippingCosts(w http.ResponseWriter, r *http.Request) {
 		customHTTP.NewErrorResponse(w, http.StatusBadRequest, "The provided params are incorrect")
 		return
 	}
-	params.Amount = uint(amount)
+
+	params.Amount = uint(math.Max(float64(amount), 6))
+
 	err = repository.DB.
 		Where("country_id=? AND province_id=?",
 			params.CountryId, params.ProvinceId).
