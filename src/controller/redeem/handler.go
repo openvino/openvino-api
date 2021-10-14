@@ -39,7 +39,7 @@ type QueryRedeem struct {
 }
 
 type ShippingCostResponse struct {
-	Cost float32 `json:"cost"`
+	Cost float64 `json:"cost"`
 }
 
 func CreateReedemInfo(w http.ResponseWriter, r *http.Request) {
@@ -137,7 +137,7 @@ func GetShippingCosts(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	costReturn := ShippingCostResponse{
-		Cost: (cost.BaseCost * float32(params.Amount) / 6.0) + (cost.CostPerUnit * float32(params.Amount)),
+		Cost: math.Round(((cost.BaseCost*float64(params.Amount)/6.0)+(cost.CostPerUnit*float64(params.Amount)))*100) / 100,
 	}
 	customHTTP.ResponseJSON(w, costReturn)
 	return
