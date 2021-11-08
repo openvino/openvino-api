@@ -232,6 +232,7 @@
     }
   },
   "tasks": {
+    "see-details": "See details",
     "categories": {
       "0": "Grape cultivation",
       "1": "Wine production",
@@ -366,6 +367,9 @@
     }
   },
   "tasks-app": {
+    "ogin": {
+      "enter-mnemonic": "Enter mnemonic..."
+    },
     "login": {
       "create": "Create account",
       "import": "Import account",
@@ -384,6 +388,8 @@
     }
   },
   "expenses": {
+    "list": "Expenses list",
+    "empty-state": "No expenses found",
     "categories": {
       "0": "Grape cultivation",
       "1": "Wine production",

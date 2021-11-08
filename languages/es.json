@@ -232,6 +232,7 @@
     }
   },
   "tasks": {
+    "see-details": "Ver detalles",
     "categories": {
       "0": "Cultivo",
       "1": "Producción de vino",
@@ -366,6 +367,9 @@
     }
   },
   "tasks-app": {
+    "ogin": {
+      "enter-mnemonic": "Introducir mnemonic..."
+    },
     "login": {
       "create": "Crear cuenta",
       "import": "Importar cuenta",
@@ -384,6 +388,8 @@
     }
   },
   "expenses": {
+    "list": "Lista de gastos",
+    "empty-state": "No se han encontrado gastos",
     "categories": {
       "0": "Cultivo",
       "1": "Producción de vino",
