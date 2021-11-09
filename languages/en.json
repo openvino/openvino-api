@@ -389,6 +389,7 @@
   },
   "expenses": {
     "list": "Expenses list",
+    "all-categories": "All categories",
     "empty-state": "No expenses found",
     "categories": {
       "0": "Grape cultivation",

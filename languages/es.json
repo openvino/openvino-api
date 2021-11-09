@@ -389,6 +389,7 @@
   },
   "expenses": {
     "list": "Lista de gastos",
+    "all-categories": "Todas las categorias",
     "empty-state": "No se han encontrado gastos",
     "categories": {
       "0": "Cultivo",
