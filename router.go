@@ -1,6 +1,8 @@
 package main
 
 import (
+	"net/http"
+
 	"github.com/openvino/openvino-api/src/controller/dashboard"
 	"github.com/openvino/openvino-api/src/controller/expense"
 	"github.com/openvino/openvino-api/src/controller/language"
@@ -10,7 +12,6 @@ import (
 	"github.com/openvino/openvino-api/src/controller/task"
 	"github.com/openvino/openvino-api/src/controller/token"
 	"github.com/openvino/openvino-api/src/controller/winerie"
-	"net/http"
 
 	"github.com/openvino/openvino-api/src/controller/auth"
 	"github.com/openvino/openvino-api/src/controller/health"
@@ -24,6 +25,8 @@ import (
 func NewRouter() *mux.Router {
 
 	router := mux.NewRouter()
+	s := http.StripPrefix("/static/", http.FileServer(http.Dir("./static/")))
+	router.PathPrefix("/static/").Handler(s)
 
 	customHTTP.AppRoutes = append(customHTTP.AppRoutes, health.Routes, auth.Routes, language.Routes, sale.Routes, sensor.Routes, task.Routes, redeem.Routes, dashboard.Routes, expense.Routes, winerie.Routes, token.Routes)
 
