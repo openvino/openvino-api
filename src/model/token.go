@@ -13,7 +13,7 @@ type TokenWinerie struct {
 	RedeemDate      time.Time `json:"redeem_date"`
 	Metrics         Metrics   `json:"metrics" gorm:"embedded"`
 	Year            int       `json:"year"`
-	open            bool      `json:"open"`
+	Open            bool      `json:"open"`
 	WinerieID       int
 	Winerie         Winerie
 }
