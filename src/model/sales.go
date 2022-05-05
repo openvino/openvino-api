@@ -10,6 +10,6 @@ type Sale struct {
 	CustomerId string `json:"customer_id"`
 	Customer   User   `json:"customer" gorm:"foreignKey:CustomerId"`
 	Amount     int    `json:"amount"`
-	WinerieID  int
+	WinerieID  string
 	Winerie    Winerie
 }

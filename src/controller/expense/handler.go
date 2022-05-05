@@ -1,12 +1,13 @@
 package expense
 
 import (
+	"net/http"
+	"time"
+
 	customHTTP "github.com/openvino/openvino-api/src/http"
 	"github.com/openvino/openvino-api/src/model"
 	"github.com/openvino/openvino-api/src/repository"
 	"github.com/thedevsaddam/govalidator"
-	"net/http"
-	"time"
 )
 
 type QueryData struct {
@@ -21,7 +22,7 @@ type InsertData struct {
 	TypeId      uint       `json:"expense_id"`
 	Description string     `json:"description"`
 	Value       float32    `json:"value"`
-	WinerieID   int        `json:"winerie_id"`
+	WinerieID   string     `json:"winerie_id"`
 }
 
 type Sums struct {

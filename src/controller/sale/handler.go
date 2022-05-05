@@ -1,11 +1,12 @@
 package sale
 
 import (
+	"net/http"
+
 	customHTTP "github.com/openvino/openvino-api/src/http"
 	"github.com/openvino/openvino-api/src/model"
 	"github.com/openvino/openvino-api/src/repository"
 	"github.com/thedevsaddam/govalidator"
-	"net/http"
 )
 
 type QueryData struct {
@@ -17,7 +18,7 @@ type SaleRequest struct {
 	Name      string `json:"name"`
 	Email     string `json:"email"`
 	Amount    int    `json:"amount"`
-	WinerieID int    `json:"winerie_id"`
+	WinerieID string `json:"winerie_id"`
 }
 
 type SaleResponse struct {

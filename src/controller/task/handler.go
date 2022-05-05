@@ -1,12 +1,13 @@
 package task
 
 import (
+	"net/http"
+	"time"
+
 	customHTTP "github.com/openvino/openvino-api/src/http"
 	"github.com/openvino/openvino-api/src/model"
 	"github.com/openvino/openvino-api/src/repository"
 	"github.com/thedevsaddam/govalidator"
-	"net/http"
-	"time"
 )
 
 type QueryData struct {
@@ -34,7 +35,7 @@ type InsertData struct {
 	Chemicals       []uint     `json:"chemicals"`
 	ChemicalAmounts []float32  `json:"chemicals_amount"`
 	Notes           string     `json:"notes"`
-	WinerieID       int        `json:"winerie_id"`
+	WinerieID       string     `json:"winerie_id"`
 }
 
 type ToolsData struct {

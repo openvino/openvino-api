@@ -32,7 +32,7 @@ type CreateRedeem struct {
 	Signature      string `json:"signature"`
 	BurnTxHash     string `json:"burn_tx_hash"`
 	ShippingTxHash string `json:"shipping_tx_hash"`
-	WinerieID      int    `json:"winerie_id"`
+	WinerieID      string `json:"winerie_id"`
 }
 
 type QueryRedeem struct {

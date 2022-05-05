@@ -13,6 +13,6 @@ type AnalysisInfo struct {
 	Bx        float32 `json:"bx"`
 	TA        float32 `json:"ta"`
 	Kg        uint    `json:"kg"`
-	WinerieID   int
-	Winerie     Winerie
+	WinerieID string
+	Winerie   Winerie
 }

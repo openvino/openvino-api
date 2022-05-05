@@ -29,6 +29,6 @@ type SensorRecord struct {
 	IrradianceIR float64 `json:"irradiance_ir"`
 	IrradianceUV float64 `json:"irradiance_uv"`
 	IrradianceVI float64 `json:"irradiance_vi"`
-	WinerieID    int
+	WinerieID    string
 	Winerie      Winerie
 }
