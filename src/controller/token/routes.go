@@ -1,27 +1,19 @@
-package task
+package token
 
 import (
-	"net/http"
-
 	customHTTP "github.com/openvino/openvino-api/src/http"
+	"net/http"
 )
 
 // Routes - Client related routes
 var Routes = customHTTP.RoutePrefix{
-	Prefix: "/tasks",
+	Prefix: "/token",
 	SubRoutes: []customHTTP.Route{
 		{
-			Name:        "CreateTask",
-			Method:      http.MethodPost,
-			Pattern:     "",
-			HandlerFunc: CreateTask,
-			Scopes:      []customHTTP.Scope{customHTTP.GuestScope},
-		},
-		{
-			Name:        "GetTasks",
+			Name:        "GetTokensByWinerie",
 			Method:      http.MethodGet,
 			Pattern:     "",
-			HandlerFunc: GetTasks,
+			HandlerFunc: GetTokensByWinerie,
 			Scopes:      []customHTTP.Scope{customHTTP.GuestScope},
 		},
 	},

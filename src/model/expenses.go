@@ -12,6 +12,8 @@ type Expense struct {
 	TypeId      uint       `json:"expense_id"`
 	Description string     `json:"description"`
 	Value       float32    `json:"value"`
+	WinerieID   int
+	Winerie     Winerie
 }
 
 type Token struct {

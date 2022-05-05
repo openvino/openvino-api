@@ -18,6 +18,8 @@ type RedeemInfo struct {
 	Signature      string `json:"signature"`
 	BurnTxHash     string `json:"burn_tx_hash"`
 	ShippingTxHash string `json:"shipping_tx_hash"`
+	WinerieID      int
+	Winerie        Winerie
 }
 
 // Sale - Base GORM Model

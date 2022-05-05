@@ -21,6 +21,8 @@ type Task struct {
 	ToolsUsed     []Tools     `json:"tools_used" gorm:"ForeignKey:TaskHash"`
 	ChemicalsUsed []Chemicals `json:"chemicals" gorm:"ForeignKey:TaskHash"`
 	Notes         string      `json:"notes"`
+	WinerieID     int
+	Winerie       Winerie
 }
 
 // Tools - Base GORM Model

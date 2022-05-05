@@ -11,6 +11,6 @@ require (
 	github.com/jinzhu/gorm v1.9.14
 	github.com/mattn/go-sqlite3 v2.0.1+incompatible // indirect
 	github.com/thedevsaddam/govalidator v1.9.10
-	github.com/wealdtech/go-ens v1.0.0
+	github.com/wealdtech/go-ens v1.0.0 // indirect
 	github.com/wealdtech/go-ens/v3 v3.4.4
 )

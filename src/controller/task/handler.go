@@ -14,6 +14,7 @@ type QueryData struct {
 	Month     string `json:"month"`
 	Day       string `json:"day"`
 	PublicKey string `json:"public_key"`
+	WinerieID string `json:"winerie_id"`
 }
 
 type InsertData struct {
@@ -33,6 +34,7 @@ type InsertData struct {
 	Chemicals       []uint     `json:"chemicals"`
 	ChemicalAmounts []float32  `json:"chemicals_amount"`
 	Notes           string     `json:"notes"`
+	WinerieID       int        `json:"winerie_id"`
 }
 
 type ToolsData struct {
@@ -46,6 +48,7 @@ func GetTasks(w http.ResponseWriter, r *http.Request) {
 	params.Month = r.URL.Query().Get("month")
 	params.Day = r.URL.Query().Get("day")
 	params.PublicKey = r.URL.Query().Get("public_key")
+	params.WinerieID = r.URL.Query().Get("winerie_id")
 
 	tasks := []model.Task{}
 
@@ -62,6 +65,9 @@ func GetTasks(w http.ResponseWriter, r *http.Request) {
 	}
 	if params.PublicKey != "" {
 		query = query.Where("public_key = ?", params.PublicKey)
+	}
+	if params.WinerieID != "" {
+		query = query.Where("winerie_id = ?", params.WinerieID)
 	}
 
 	query.Preload("ToolsUsed").Preload("ChemicalsUsed").Order("ini_timestamp desc").Find(&tasks)
@@ -89,12 +95,21 @@ func CreateTask(w http.ResponseWriter, r *http.Request) {
 		"chemicals":        []string{"optional", "[]string"},
 		"chemicals_amount": []string{"optional", "[]float32"},
 		"notes":            []string{"optional", "string"},
+		"winerie_id":       []string{"required", "int"},
 	}
 	err := customHTTP.DecodeJSONBody(w, r, &body, rules)
 	if err != nil {
 		customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
 	}
+
+	var winerie model.Winerie
+	err = repository.DB.First(&winerie, body.WinerieID).Error
+	if err != nil {
+		customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
 	task := model.Task{
 		Hash:         body.Hash,
 		PublicKey:    body.PublicKey,
@@ -109,6 +124,7 @@ func CreateTask(w http.ResponseWriter, r *http.Request) {
 		CategoryId:   body.CategoryId,
 		TypeId:       body.TypeId,
 		Notes:        body.Notes,
+		WinerieID:    body.WinerieID,
 	}
 
 	for _, element := range body.ToolsUsed {

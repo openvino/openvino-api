@@ -32,10 +32,12 @@ type CreateRedeem struct {
 	Signature      string `json:"signature"`
 	BurnTxHash     string `json:"burn_tx_hash"`
 	ShippingTxHash string `json:"shipping_tx_hash"`
+	WinerieID      int    `json:"winerie_id"`
 }
 
 type QueryRedeem struct {
-	Year string `json:"year"`
+	Year      string `json:"year"`
+	WinerieID string `json:"winerie_id"`
 }
 
 type ShippingCostResponse struct {
@@ -59,12 +61,21 @@ func CreateReedemInfo(w http.ResponseWriter, r *http.Request) {
 		"burn_tx_hash":     []string{"required", "string"},
 		"shipping_tx_hash": []string{"required", "string"},
 		"signature":        []string{"required", "string"},
+		"winerie_id":       []string{"required", "int"},
 	}
 	err := customHTTP.DecodeJSONBody(w, r, &body, rules)
 	if err != nil {
 		customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
 	}
+
+	var winerie model.Winerie
+	err = repository.DB.First(&winerie, body.WinerieID).Error
+	if err != nil {
+		customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
 	user := model.User{
 		PublicKey: body.PublicKey,
 		Name:      body.Name,
@@ -85,6 +96,7 @@ func CreateReedemInfo(w http.ResponseWriter, r *http.Request) {
 		Signature:      body.Signature,
 		BurnTxHash:     body.BurnTxHash,
 		ShippingTxHash: body.ShippingTxHash,
+		WinerieID:      body.WinerieID,
 	}
 	repository.DB.Create(&redeem)
 }
@@ -93,22 +105,21 @@ func GetRedeemInfo(w http.ResponseWriter, r *http.Request) {
 	redeems := []model.RedeemInfo{}
 	var params = QueryRedeem{}
 	params.Year = r.URL.Query().Get("year")
-	if params.Year != "" {
-		err := repository.DB.
-			Where("year=?", params.Year).
-			Preload("Customer").
-			Find(&redeems).Error
-		if err != nil {
-			customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
-			return
-		}
-	} else {
-		err := repository.DB.Preload("Customer").Find(&redeems).Error
-		if err != nil {
-			customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
-			return
-		}
+	params.WinerieID = r.URL.Query().Get("winerie_id")
+
+	query := repository.DB
+	if params.WinerieID != "" {
+		query = query.Where("winerie_id = ?", params.WinerieID)
 	}
+	if params.Year != "" {
+		query = query.Where("year=?", params.Year)
+	}
+	err := query.Preload("Customer").Find(&redeems).Error
+	if err != nil {
+		customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
 	customHTTP.ResponseJSON(w, redeems)
 	return
 }

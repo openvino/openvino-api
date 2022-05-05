@@ -1,34 +1,26 @@
-package redeem
+package winerie
 
 import (
-	"net/http"
-
 	customHTTP "github.com/openvino/openvino-api/src/http"
+	"net/http"
 )
 
 // Routes - Client related routes
 var Routes = customHTTP.RoutePrefix{
-	Prefix: "/redeem",
+	Prefix: "/wineries",
 	SubRoutes: []customHTTP.Route{
 		{
-			Name:        "CreateRedeemInfo",
+			Name:        "RegisterWinerie",
 			Method:      http.MethodPost,
 			Pattern:     "",
-			HandlerFunc: CreateReedemInfo,
+			HandlerFunc: CreateWinerie,
 			Scopes:      []customHTTP.Scope{customHTTP.GuestScope},
 		},
 		{
-			Name:        "GetRedeemInfo",
+			Name:        "GetWineries",
 			Method:      http.MethodGet,
 			Pattern:     "",
-			HandlerFunc: GetRedeemInfo,
-			Scopes:      []customHTTP.Scope{customHTTP.GuestScope},
-		},
-		{
-			Name:        "GetShippingCosts",
-			Method:      http.MethodGet,
-			Pattern:     "/shipping",
-			HandlerFunc: GetShippingCosts,
+			HandlerFunc: GetWineries,
 			Scopes:      []customHTTP.Scope{customHTTP.GuestScope},
 		},
 	},

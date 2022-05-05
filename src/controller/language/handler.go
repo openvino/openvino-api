@@ -11,7 +11,7 @@ import (
 
 func GetLanguage(w http.ResponseWriter, r *http.Request) {
 	lang := mux.Vars(r)["lang"]
-	jsonFile, err := os.Open("/languages/" + lang + ".json" )
+	jsonFile, err := os.Open("/languages/" + lang + ".json")
 	if err != nil {
 		customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
@@ -23,4 +23,3 @@ func GetLanguage(w http.ResponseWriter, r *http.Request) {
 	customHTTP.ResponseJSON(w, f)
 	return
 }
-

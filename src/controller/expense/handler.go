@@ -10,8 +10,9 @@ import (
 )
 
 type QueryData struct {
-	Token    string `json:"token_id"`
-	Category string `json:"category_id"`
+	Token     string `json:"token_id"`
+	Category  string `json:"category_id"`
+	WinerieID string `json:"winerie_id"`
 }
 
 type InsertData struct {
@@ -20,6 +21,7 @@ type InsertData struct {
 	TypeId      uint       `json:"expense_id"`
 	Description string     `json:"description"`
 	Value       float32    `json:"value"`
+	WinerieID   int        `json:"winerie_id"`
 }
 
 type Sums struct {
@@ -37,6 +39,7 @@ func GetExpenses(w http.ResponseWriter, r *http.Request) {
 	var params = QueryData{}
 	params.Token = r.URL.Query().Get("token_id")
 	params.Category = r.URL.Query().Get("category_id")
+	params.WinerieID = r.URL.Query().Get("winerie_id")
 
 	if params.Token == "" {
 		customHTTP.NewErrorResponse(w, http.StatusBadRequest, "The query has to specify at least a token_id")
@@ -52,6 +55,10 @@ func GetExpenses(w http.ResponseWriter, r *http.Request) {
 
 	if params.Category != "" {
 		query = query.Where("type_id = ?", params.Category)
+	}
+
+	if params.WinerieID != "" {
+		query = query.Where("winerie_id = ?", params.WinerieID)
 	}
 
 	query.Order("timestamp desc").Find(&expenses)
@@ -80,9 +87,17 @@ func CreateExpense(w http.ResponseWriter, r *http.Request) {
 		"expense_id":  []string{"required", "uint"},
 		"description": []string{"required", "string"},
 		"value":       []string{"required", "float32"},
+		"winerie_id":  []string{"required", "int"},
 	}
 
 	err := customHTTP.DecodeJSONBody(w, r, &body, rules)
+	if err != nil {
+		customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	var winerie model.Winerie
+	err = repository.DB.First(&winerie, body.WinerieID).Error
 	if err != nil {
 		customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
@@ -95,6 +110,7 @@ func CreateExpense(w http.ResponseWriter, r *http.Request) {
 		TypeId:      body.TypeId,
 		Description: body.Description,
 		Value:       body.Value,
+		WinerieID:   body.WinerieID,
 	}
 
 	repository.DB.Create(expense)
