@@ -399,5 +399,15 @@
       "4": "Administration",
       "5": "Marketing and communication"
     }
+  },
+  "wineries": {
+    "title": "Wineries",
+    "contact": "Contact",
+    "openvino-wiki": "Wiki",
+    "visit-winery": "Visit winery",
+    "empty-state": "No wineries added yet",
+    "coming-soon": "Coming soon",
+    "search": "Search for your winery here",
+    "back": "Back to wineries"
   }
 }

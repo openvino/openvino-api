@@ -399,5 +399,15 @@
       "4": "Administración",
       "5": "Márqueting y comunicación"
     }
+  },
+  "wineries": {
+    "title": "Bodegas",
+    "contact": "Contacto",
+    "openvino-wiki": "Wiki",
+    "visit-winery": "Visita la bodega",
+    "empty-state": "No hay bodegas añadidas",
+    "coming-soon": "Próximamente",
+    "search": "Busca aquí tu bodega",
+    "back": "Volver a las bodegas"
   }
 }
