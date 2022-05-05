@@ -19,7 +19,7 @@ COPY src src
 COPY main.go .
 COPY router.go .
 COPY languages /languages
-COPY static .
+COPY static static
 
 # Build the application
 RUN go build -o main -v
