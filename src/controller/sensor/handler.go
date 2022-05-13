@@ -1,17 +1,18 @@
 package sensor
 
 import (
+	"log"
+	"net/http"
+
 	customHTTP "github.com/openvino/openvino-api/src/http"
 	"github.com/openvino/openvino-api/src/model"
 	"github.com/openvino/openvino-api/src/repository"
-	"log"
-	"net/http"
 )
 
 type QueryData struct {
-	Harvest string `json:"year"`
-	Month   string `json:"month"`
-	Day     string `json:"day"`
+	Harvest   string `json:"year"`
+	Month     string `json:"month"`
+	Day       string `json:"day"`
 	WinerieID string `json:"winerie_id"`
 }
 
@@ -55,6 +56,7 @@ func GetSensorRecords(w http.ResponseWriter, r *http.Request) {
 	} else if params.Day != "" && params.Month != "" && params.Harvest != "" {
 		stm.
 			Where("DAY(timestamp) = ? AND MONTH(timestamp) = ? AND YEAR(timestamp) = ?", params.Day, params.Month, params.Harvest).
+			Group("sensor_id").
 			Find(&records)
 	} else {
 		sensordataCs := model.SensorRecord{}
