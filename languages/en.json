@@ -41,6 +41,7 @@
       "sensoric": "Sensors",
       "business": "Business",
       "work": "Work",
+      "evidences": "Evidences",
       "test1": "Test 1",
       "test2": "Test 2"
     },
@@ -409,5 +410,43 @@
     "coming-soon": "Coming soon",
     "search": "Search for your winery here",
     "back": "Back to wineries"
+  },
+  "evidences": {
+    "title": "Evidences",
+    "info": {
+      "title": "Check the evidences that proof our wine is organic",
+      "description": "Each token has its tag where the evidence of our product organic veracity is uploaded for everyone to see. If you find anything that's not right you can easily create a challenge to contradict the proofs presented so far by displaying yours."
+    },
+    "tag-details": "Tag's details",
+    "state": "State",
+    "request-type": "Request type",
+    "bounty": "Bounty",
+    "requester": "Requester",
+    "ending-date": "Ending date",
+    "public-name": "Public tag name",
+    "contract-address": "Contract address",
+    "website": "Website link",
+    "public-note": "Public note",
+    "tag-history": "Tag’s history",
+    "first-request": "First request submission",
+    "view-evidence": "View evidence",
+    "challenge-submission": "Challenge submission",
+    "read": "Read the",
+    "listing-criteria": "lisiting criteria",
+    "challenge-motive": "Explain to the jurors why you should think this submission should be rejected.",
+    "description": "Write your description",
+    "attachment": "Include attachment",
+    "upload-file": "Upload file",
+    "deposit": "To challenge a submission, a deposit is required. This value will be awarded to the party that wins the dispute.",
+    "total": "Total submitted",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "tooltip": {
+      "public-name": "Public name description",
+      "contract-address": "Contract address description",
+      "website": "Website description",
+      "public-note": "Public note description",
+      "first-request": "First request description"
+    }
   }
 }

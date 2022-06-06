@@ -41,6 +41,7 @@
       "sensoric": "Sensores",
       "work": "Tareas",
       "business": "Negocio",
+      "evidences": "Evidencias",
       "test1": "Test 1",
       "test2": "Test 2"
     },
@@ -409,5 +410,43 @@
     "coming-soon": "Próximamente",
     "search": "Busca aquí tu bodega",
     "back": "Volver a las bodegas"
+  },
+  "evidences": {
+    "title": "Evidencias",
+    "info": {
+      "title": "Check the evidences that proof our wine is organic",
+      "description": "Each token has its tag where the evidence of our product organic veracity is uploaded for everyone to see. If you find anything that's not right you can easily create a challenge to contradict the proofs presented so far by displaying yours."
+    },
+    "tag-details": "Detalles del tag",
+    "state": "Estado",
+    "request-type": "Tipo de petición",
+    "bounty": "Recompensa",
+    "requester": "Solicitante",
+    "ending-date": "Fecha de finalización",
+    "public-name": "Nombre público",
+    "contract-address": "Dirección del contrato",
+    "website": "Dirección web",
+    "public-note": "Nota pública",
+    "tag-history": "Historial del tag",
+    "first-request": "Presentación primera solicitud",
+    "view-evidence": "Ver evidencia",
+    "challenge-submission": "Presentar desafío",
+    "read": "Lee los",
+    "listing-criteria": "criterios de listado",
+    "challenge-motive": "Explica al jurado porque crees que esta solicitud debería ser rechazada.",
+    "description": "Escribe aquí tu descripción",
+    "attachment": "Adjuntar archivo",
+    "upload-file": "Subir archivo",
+    "deposit": "Para desafiar esta prueba se necesita un depósito el cual será entregado a la parte que gane la disputa.",
+    "total": "Total depositado",
+    "cancel": "Cancelar",
+    "submit": "Enviar",
+    "tooltip": {
+      "public-name": "Public name description",
+      "contract-address": "Contract address description",
+      "website": "Website description",
+      "public-note": "Public note description",
+      "first-request": "First request description"
+    }
   }
 }
