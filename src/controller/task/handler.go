@@ -56,13 +56,13 @@ func GetTasks(w http.ResponseWriter, r *http.Request) {
 	query := repository.DB
 
 	if params.Day == "" && params.Month == "" && params.Harvest != "" {
-		query = query.Where("YEAR(ini_timestamp) = ?", params.Harvest)
+		query = query.Where("EXTRACT(YEAR FROM ini_timestamp) = ?", params.Harvest)
 	}
 	if params.Month != "" {
-		query = query.Where("MONTH(ini_timestamp) = ?", params.Month)
+		query = query.Where("EXTRACT(MONTH FROM ini_timestamp) = ?", params.Month)
 	}
 	if params.Day != "" {
-		query = query.Where("DAY(ini_timestamp) = ?", params.Day)
+		query = query.Where("EXTRACT(DAY FROM ini_timestamp) = ?", params.Day)
 	}
 	if params.PublicKey != "" {
 		query = query.Where("public_key = ?", params.PublicKey)

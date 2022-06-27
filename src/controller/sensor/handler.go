@@ -36,8 +36,8 @@ func GetSensorRecords(w http.ResponseWriter, r *http.Request) {
 	log.Println(params)
 
 	records := []model.SensorRecord{}
-	stm := repository.DB.Select(query)
-	stm2 := repository.DB
+	stm := repository.DB.Debug().Select(query)
+	stm2 := repository.DB.Debug()
 	if params.WinerieID != "" {
 		stm = stm.Where("winerie_id = ?", params.WinerieID)
 		stm2 = stm2.Where("winerie_id = ?", params.WinerieID)
@@ -45,17 +45,17 @@ func GetSensorRecords(w http.ResponseWriter, r *http.Request) {
 
 	if params.Day == "" && params.Month == "" && params.Harvest != "" {
 		stm.
-			Where("YEAR(timestamp) = ?", params.Harvest).
-			Group("DAY(timestamp), MONTH(timestamp), sensor_id").
+			Where("EXTRACT(YEAR FROM timestamp) = ?", params.Harvest).
+			Group("EXTRACT(DAY FROM timestamp), EXTRACT(MONTH FROM timestamp), sensor_id").
 			Find(&records)
 	} else if params.Day == "" && params.Month != "" && params.Harvest != "" {
 		stm.
-			Where("MONTH(timestamp) = ? AND YEAR(timestamp) = ?", params.Month, params.Harvest).
-			Group("DAY(timestamp), sensor_id").
+			Where("EXTRACT(MONTH FROM timestamp) = ? AND EXTRACT(YEAR FROM timestamp) = ?", params.Month, params.Harvest).
+			Group("EXTRACT(DAY FROM timestamp), sensor_id").
 			Find(&records)
 	} else if params.Day != "" && params.Month != "" && params.Harvest != "" {
 		stm.
-			Where("DAY(timestamp) = ? AND MONTH(timestamp) = ? AND YEAR(timestamp) = ?", params.Day, params.Month, params.Harvest).
+			Where("EXTRACT(DAY FROM timestamp) = ? AND EXTRACT(MONTH FROM timestamp) = ? AND EXTRACT(YEAR FROM timestamp) = ?", params.Day, params.Month, params.Harvest).
 			Group("sensor_id").
 			Find(&records)
 	} else {
@@ -84,17 +84,17 @@ func GetSensorHashes(w http.ResponseWriter, r *http.Request) {
 
 	if params.Day == "" && params.Month == "" && params.Harvest != "" {
 		repository.DB.Table("sensor_records").
-			Where("YEAR(timestamp) = ?", params.Harvest).Order("timestamp desc").
+			Where("EXTRACT(YEAR FROM timestamp) = ?", params.Harvest).Order("timestamp desc").
 			Pluck("hash", &hashes)
 
 	} else if params.Day == "" && params.Month != "" && params.Harvest != "" {
 		repository.DB.Table("sensor_records").
-			Where("MONTH(timestamp) = ? AND YEAR(timestamp) = ?", params.Month, params.Harvest).
+			Where("EXTRACT(MONTH FROM timestamp) = ? AND EXTRACT(YEAR FROM timestamp) = ?", params.Month, params.Harvest).
 			Order("timestamp desc").
 			Pluck("hash", &hashes)
 	} else if params.Day != "" && params.Month != "" && params.Harvest != "" {
 		repository.DB.Table("sensor_records").
-			Where("DAY(timestamp) = ? AND MONTH(timestamp) = ? AND YEAR(timestamp) = ?", params.Day, params.Month, params.Harvest).
+			Where("EXTRACT(DAY FROM timestamp) = ? AND EXTRACT(MONTH FROM timestamp) = ? AND EXTRACT(YEAR FROM timestamp) = ?", params.Day, params.Month, params.Harvest).
 			Order("timestamp desc").
 			Pluck("hash", &hashes)
 	} else {
