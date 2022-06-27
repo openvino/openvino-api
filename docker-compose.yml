@@ -1,54 +1,52 @@
-version: '3.7'
+version: "3.7"
 
 services:
-    openvino-db:
-        image: mysql/mysql-server:latest
-        container_name: openvino-database
-        ports:
-            - 3306:3306
-        expose:
-            - 3306
-        environment:
-            - "MYSQL_ROOT_PASSWORD=${DB_PASSWORD_ROOT}"
-            - "MYSQL_DATABASE=${DB_NAME}"
-            - "MYSQL_USER=${DB_USERNAME}"
-            - "MYSQL_PASSWORD=${DB_PASSWORD}"
-        networks:
-            - internal
-        volumes:
-            - openvino-db:/var/lib/mysql
-        restart: always
-        
-    openvino-api:
-        build:
-            context: .
-            dockerfile: Dockerfile
-        container_name: openvino-api
-        environment:
-                - "ENVIRONMENT=${ENVIRONMENT}"
-                - "API_PORT=${API_PORT}"
-                - "DB_USERNAME=${DB_USERNAME}"
-                - "DB_PASSWORD=${DB_PASSWORD}"
-                - "DB_HOST=openvino-db"
-                - "DB_PORT=3306"
-                - "DB_NAME=${DB_NAME}"
-                - "SECRET_AUTH=${SECRET_AUTH}"
-                - "ETH_DEFAULT_ADMIN_PUBLIC=${ETH_DEFAULT_ADMIN_PUBLIC}"
-                - "ETH_DEFAULT_ADMIN_PRIVATE=${ETH_DEFAULT_ADMIN_PRIVATE}"
-                - "ETH_INFURA_SECRET=${ETH_INFURA_SECRET}"
-                - "ETH_NETWORK=${ETH_NETWORK}"
-                - "ETH_SMART_CONTRACT=${ETH_SMART_CONTRACT}"
-        networks:
-            - internal
-        ports:
-            - "${API_PORT}:${API_PORT}"
-        expose:
-            - "${API_PORT}"
-        restart: always
-        command: ./wait-for-it.sh -t 0 openvino-db:3306 -- ./main
-        
+  openvino-db:
+    image: postgres
+    container_name: openvino-database
+    ports:
+      - 5432:5432
+    expose:
+      - 5432
+    environment:
+      - "POSTGRES_PASSWORD=${DB_PASSWORD}"
+      - "POSTGRES_DB=${DB_NAME}"
+    networks:
+      - internal
+    volumes:
+      - openvino-db:/var/lib/postgresql/data
+    restart: always
+
+  openvino-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: openvino-api
+    environment:
+      - "ENVIRONMENT=${ENVIRONMENT}"
+      - "API_PORT=${API_PORT}"
+      - "DB_USERNAME=${DB_USERNAME}"
+      - "DB_PASSWORD=${DB_PASSWORD}"
+      - "DB_HOST=openvino-db"
+      - "DB_PORT=5432"
+      - "DB_NAME=${DB_NAME}"
+      - "SECRET_AUTH=${SECRET_AUTH}"
+      - "ETH_DEFAULT_ADMIN_PUBLIC=${ETH_DEFAULT_ADMIN_PUBLIC}"
+      - "ETH_DEFAULT_ADMIN_PRIVATE=${ETH_DEFAULT_ADMIN_PRIVATE}"
+      - "ETH_INFURA_SECRET=${ETH_INFURA_SECRET}"
+      - "ETH_NETWORK=${ETH_NETWORK}"
+      - "ETH_SMART_CONTRACT=${ETH_SMART_CONTRACT}"
+    networks:
+      - internal
+    ports:
+      - "${API_PORT}:${API_PORT}"
+    expose:
+      - "${API_PORT}"
+    restart: always
+    command: ./wait-for-it.sh -t 0 openvino-db:5432 -- ./main
+
 networks:
-    internal:
+  internal:
 
 volumes:
-    openvino-db:
+  openvino-db:

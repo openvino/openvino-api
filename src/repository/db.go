@@ -7,7 +7,7 @@ import (
 	"github.com/openvino/openvino-api/src/config"
 
 	// Import mysql driver
-	_ "github.com/jinzhu/gorm/dialects/mysql"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
 // DB - Global DB variable
@@ -22,7 +22,7 @@ func SetupDB(config config.DatabaseConfig) (*gorm.DB, error) {
 	var dbUser string = config.Username
 	var dbPassword string = config.Password
 
-	db, dbError := gorm.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", dbUser, dbPassword, dbHost, dbPort, dbName))
+	db, dbError := gorm.Open("postgres", fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", dbHost, dbPort, dbUser, dbPassword, dbName))
 	if dbError != nil {
 		return nil, dbError
 	}
