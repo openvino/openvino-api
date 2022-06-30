@@ -447,6 +447,10 @@
       "website": "Website description",
       "public-note": "Public note description",
       "first-request": "First request description"
+    },
+    "tag-list": {
+      "title": "Tags",
+      "see-details": "See details"
     }
   }
 }
