@@ -450,7 +450,8 @@
     },
     "tag-list": {
       "title": "Tags",
-      "see-details": "See details"
+      "see-details": "See details",
+      "status": "Status"
     }
   }
 }
