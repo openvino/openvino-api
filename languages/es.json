@@ -450,6 +450,7 @@
     },
     "tag-list": {
       "title": "Tags",
+      "more-info": "Más info",
       "see-details": "Ver detalles",
       "status": "Estado"
     }

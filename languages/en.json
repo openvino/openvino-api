@@ -451,6 +451,7 @@
     "tag-list": {
       "title": "Tags",
       "see-details": "See details",
+      "more-info": "More info",
       "status": "Status"
     }
   }
