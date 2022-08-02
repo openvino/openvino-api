@@ -5,6 +5,7 @@ import "github.com/jinzhu/gorm"
 // Sale - Base GORM Model
 type RedeemInfo struct {
 	gorm.Model
+	ID             string `json:"id" gorm:"primaryKey"`
 	CustomerId     string `json:"customer_id"`
 	Customer       User   `json:"customer" gorm:"foreignKey:CustomerId"`
 	Year           string `json:"year"`

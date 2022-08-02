@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/google/uuid"
 	customHTTP "github.com/openvino/openvino-api/src/http"
 	"github.com/openvino/openvino-api/src/model"
 	"github.com/openvino/openvino-api/src/repository"
@@ -78,11 +79,10 @@ func CreateReedemInfo(w http.ResponseWriter, r *http.Request) {
 
 	user := model.User{
 		PublicKey: body.PublicKey,
-		Name:      body.Name,
-		Email:     body.Email,
 	}
 	repository.DB.FirstOrCreate(&user, user)
 	redeem := model.RedeemInfo{
+		ID:             uuid.New().String(),
 		CustomerId:     body.PublicKey,
 		Customer:       user,
 		Year:           body.Year,
