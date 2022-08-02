@@ -1,11 +1,15 @@
 package model
 
-import "github.com/jinzhu/gorm"
+import (
+	"time"
+
+	"github.com/jinzhu/gorm"
+)
 
 // Sale - Base GORM Model
 type RedeemInfo struct {
 	gorm.Model
-	ID             string `json:"id" gorm:"primaryKey"`
+	ID             string `gorm:"primary_key"`
 	CustomerId     string `json:"customer_id"`
 	Customer       User   `json:"customer" gorm:"foreignKey:CustomerId"`
 	Year           string `json:"year"`
@@ -19,6 +23,8 @@ type RedeemInfo struct {
 	Signature      string `json:"signature"`
 	BurnTxHash     string `json:"burn_tx_hash"`
 	ShippingTxHash string `json:"shipping_tx_hash"`
+	CreatedAt      time.Time
+	UpdatedAt      time.Time
 	WinerieID      string
 	Winerie        Winerie
 }
