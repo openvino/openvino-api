@@ -1,6 +1,6 @@
-# Openvino - Golang API
+# OpenVino - Golang API
 
-Minimal GoLang API Project Structure with Docker used for Enchainte APIs
+Minimal GoLang API Project Structure with Docker used for Bloock APIs
 
 ## Requirements
 
