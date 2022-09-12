@@ -176,7 +176,7 @@
     "transfer-shipping-costs": "Transfer shipping costs",
     "shipping-cost-not-found": "We currently do not support shipping to this province.",
     "countries": {
-      "34 {
+      "34": {
         "name": "Spain",
         "province": {
           "1": "Andalucía",
@@ -254,7 +254,7 @@
           "49": "Wisconsin",
           "50": "Wyoming"
         }
-      }
+      },
       "2": {
         "name": "Argentina",
         "province": {
