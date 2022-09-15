@@ -35,7 +35,6 @@ func SaveSensorRecords(w http.ResponseWriter, r *http.Request) {
 		"timestamp": {"required", "date"},
 	})
 	if err != nil {
-		customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
 	}
 	sensorData.Winerie = winery
