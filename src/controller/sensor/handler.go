@@ -1,6 +1,8 @@
 package sensor
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"log"
 	"net/http"
 
@@ -14,6 +16,31 @@ type QueryData struct {
 	Month     string `json:"month"`
 	Day       string `json:"day"`
 	WinerieID string `json:"winerie_id"`
+}
+
+func SaveSensorRecords(w http.ResponseWriter, r *http.Request) {
+	hash := sha256.Sum256([]byte(r.Header.Get("Authorization")))
+	secretHash := hex.EncodeToString(hash[:])
+
+	var winery model.Winerie
+	repository.DB.Table("wineries").Where("secret = ?", secretHash).First(&winery)
+
+	if secretHash != winery.Secret {
+		customHTTP.NewErrorResponse(w, http.StatusUnauthorized, "Unauthorized")
+		return
+	}
+
+	var sensorData model.SensorRecord
+	err := customHTTP.DecodeJSONBody(w, r, &sensorData, map[string][]string{
+		"timestamp": {"required", "date"},
+	})
+	if err != nil {
+		customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
+		return
+	}
+	sensorData.Winerie = winery
+	repository.DB.Table("sensor_records").Create(&sensorData)
+	customHTTP.ResponseJSON(w, sensorData)
 }
 
 func GetSensorRecords(w http.ResponseWriter, r *http.Request) {
