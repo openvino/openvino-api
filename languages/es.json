@@ -35,7 +35,7 @@
       "18": "6 de mayo del 2021",
       "19": "6 de mayo del 2022",
       "20": "6 de mayo del 2023",
-      "21": "6 de mayo del 2024"
+      "21": "6 de mayo del 2024",
       "22": "6 de mayo del 2025"
     },
     "tabs": {
@@ -255,7 +255,7 @@
           "49": "Wisconsin",
           "50": "Wyoming"
         }
-      }
+      },
       "2": {
         "name": "Argentina",
         "province": {
@@ -285,6 +285,7 @@
           "24": "Tierra del Fuego",
           "25": "Tucuman"
         }
+      }
     }
   },
   "tasks": {
@@ -467,7 +468,7 @@
     "back": "Volver a las bodegas"
   },
   "evidences": {
-    "title": "Evidencias",
+    "title": "BioDigital Cert",
     "info": {
       "title": "Check the BioDigital Cert that prove our wine is organic",
       "description": "Each token has its tag where the evidence of our product organic veracity is uploaded for everyone to see. If you find anything that's not right you can easily create a challenge to contradict the proofs presented so far by displaying yours."

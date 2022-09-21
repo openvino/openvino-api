@@ -41,7 +41,7 @@
       "sensoric": "Sensors",
       "business": "Business",
       "work": "Work",
-      "evidences": "Evidences",
+      "evidences": "BioDigital Cert",
       "test1": "Test 1",
       "test2": "Test 2"
     },
@@ -467,7 +467,7 @@
     "back": "Back to wineries"
   },
   "evidences": {
-    "title": "Evidences",
+    "title": "BioDigital Cert",
     "info": {
       "title": "Check the evidences that proof our wine is organic",
       "description": "Each token has its tag where the evidence of our product organic veracity is uploaded for everyone to see. If you find anything that's not right you can easily create a challenge to contradict the proofs presented so far by displaying yours."
