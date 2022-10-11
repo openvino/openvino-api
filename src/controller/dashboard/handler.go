@@ -23,40 +23,41 @@ func GetDashboard(w http.ResponseWriter, r *http.Request) {
 
 	var params = QueryData{}
 	params.WinerieID = r.URL.Query().Get("winerie_id")
-
-	stm := repository.DB
-	if params.WinerieID != "" {
-		stm = stm.Where("winerie_id = ?", params.WinerieID)
-	}
-
-	if params.Year != "" {
-		stm = stm.Where("winerie_id = ?", params.WinerieID)
-		stm = stm.Where("EXTRACT(YEAR FROM timestamp) = ?", params.Year)
-	}
+	params.Year = r.URL.Query().Get("year")
 
 	sensors := []model.SensorRecord{}
 	sensordataCs := model.SensorRecord{}
 	sensordataPv := model.SensorRecord{}
 	sensordataMo := model.SensorRecord{}
 	sensordataMe := model.SensorRecord{}
-	stm.Where("sensor_id = ?", "petit-verdot").Order("timestamp desc").Limit(1).Find(&sensordataPv)
-	stm.Where("sensor_id = ?", "cabernet-sauvignon").Order("timestamp desc").Limit(1).Find(&sensordataCs)
-	stm.Where("sensor_id = ?", "malbec-este").Order("timestamp desc").Limit(1).Find(&sensordataMe)
-	stm.Where("sensor_id = ?", "malbec-oeste").Order("timestamp desc").Limit(1).Find(&sensordataMo)
+	sensorQuery := repository.DB.
+		Where("winerie_id = ?", params.WinerieID).
+		Where("EXTRACT(YEAR FROM timestamp) = ?", params.Year)
+	sensorQuery.Where("sensor_id = ?", "petit-verdot").Order("timestamp desc").Limit(1).Find(&sensordataPv)
+	sensorQuery.Where("sensor_id = ?", "cabernet-sauvignon").Order("timestamp desc").Limit(1).Find(&sensordataCs)
+	sensorQuery.Where("sensor_id = ?", "malbec-este").Order("timestamp desc").Limit(1).Find(&sensordataMe)
+	sensorQuery.Where("sensor_id = ?", "malbec-oeste").Order("timestamp desc").Limit(1).Find(&sensordataMo)
 	sensors = []model.SensorRecord{sensordataCs, sensordataPv, sensordataMo, sensordataMe}
 
 	task := model.Task{}
-	stm.Order("end_timestamp desc").Limit(1).Find(&task)
+	repository.DB.
+		Where("winerie_id = ?", params.WinerieID).
+		Where("EXTRACT(YEAR FROM timestamp) = ?", params.Year).
+		Order("end_timestamp desc").Limit(1).Find(&task)
 
 	analysis := []model.AnalysisInfo{}
 	analysisCs := model.AnalysisInfo{}
 	analysisPv := model.AnalysisInfo{}
 	analysisMo := model.AnalysisInfo{}
 	analysisMe := model.AnalysisInfo{}
-	stm.Where("grape_type = ?", "petit-verdot").Order("created_at desc").Limit(1).Find(&analysisPv)
-	stm.Where("grape_type = ?", "cabernet-sauvignon").Order("created_at desc").Limit(1).Find(&analysisCs)
-	stm.Where("grape_type = ?", "malbec-este").Order("created_at desc").Limit(1).Find(&analysisMe)
-	stm.Where("grape_type = ?", "malbec-oeste").Order("created_at desc").Limit(1).Find(&analysisMo)
+
+	analysisQuery := repository.DB.
+		Where("winerie_id = ?", params.WinerieID).
+		Where("year = ?", params.Year)
+	analysisQuery.Where("grape_type = ?", "petit-verdot").Order("created_at desc").Limit(1).Find(&analysisPv)
+	analysisQuery.Where("grape_type = ?", "cabernet-sauvignon").Order("created_at desc").Limit(1).Find(&analysisCs)
+	analysisQuery.Where("grape_type = ?", "malbec-este").Order("created_at desc").Limit(1).Find(&analysisMe)
+	analysisQuery.Where("grape_type = ?", "malbec-oeste").Order("created_at desc").Limit(1).Find(&analysisMo)
 	analysis = []model.AnalysisInfo{analysisCs, analysisPv, analysisMo, analysisMe}
 
 	dashboard := ResponseDashboard{
