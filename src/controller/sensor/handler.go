@@ -82,7 +82,7 @@ func GetSensorRecords(w http.ResponseWriter, r *http.Request) {
 	} else if params.Day != "" && params.Month != "" && params.Harvest != "" {
 		stm.
 			Where("EXTRACT(DAY FROM timestamp) = ? AND EXTRACT(MONTH FROM timestamp) = ? AND EXTRACT(YEAR FROM timestamp) = ?", params.Day, params.Month, params.Harvest).
-			Group("sensor_id").
+			Group("EXTRACT(HOUR FROM timestamp), sensor_id").
 			Find(&records)
 	} else {
 		sensordataCs := model.SensorRecord{}
