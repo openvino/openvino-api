@@ -14,6 +14,7 @@ type TokenWinerie struct {
 	Metrics         Metrics   `json:"metrics" gorm:"embedded"`
 	Year            int       `json:"year"`
 	Open            bool      `json:"open"`
+	Stage           bool      `json:"stage"`
 	WinerieID       string
 	Winerie         Winerie
 }
