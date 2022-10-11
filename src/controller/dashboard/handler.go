@@ -1,14 +1,16 @@
 package dashboard
 
 import (
+	"net/http"
+
 	customHTTP "github.com/openvino/openvino-api/src/http"
 	"github.com/openvino/openvino-api/src/model"
 	"github.com/openvino/openvino-api/src/repository"
-	"net/http"
 )
 
 type QueryData struct {
 	WinerieID string `json:"winerie_id"`
+	Year      string `json:"year"`
 }
 
 type ResponseDashboard struct {
@@ -25,6 +27,11 @@ func GetDashboard(w http.ResponseWriter, r *http.Request) {
 	stm := repository.DB
 	if params.WinerieID != "" {
 		stm = stm.Where("winerie_id = ?", params.WinerieID)
+	}
+
+	if params.Year != "" {
+		stm = stm.Where("winerie_id = ?", params.WinerieID)
+		stm = stm.Where("EXTRACT(YEAR FROM timestamp) = ?", params.Year)
 	}
 
 	sensors := []model.SensorRecord{}
