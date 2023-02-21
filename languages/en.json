@@ -284,6 +284,24 @@
           "24": "Tierra del Fuego",
           "25": "Tucuman"
         }
+      },
+      "33": {
+        "name": "France",
+        "province": {
+          "1": "Auvergn-Rhône-Alpes",
+          "2": "Bourgogne-France-Comté",
+          "3": "Brittany",
+          "4": "Centre-Val de Loire",
+          "5": "Corsica",
+          "6": "Grand Est",
+          "7": "Hauts-de-France",
+          "8": "Paris Region",
+          "9": "Normandie",
+          "10": "Nouvelle-Aquitaine",
+          "11": "Occitanie",
+          "12": "Pays de la Loire",
+          "13": "Provence Alpes Côte d'Azur"
+        }
       }
     }
   },
