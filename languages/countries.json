@@ -126,6 +126,11 @@
           "12": "Pays de la Loire",
           "13": "Provence Alpes Côte d'Azur"
         }
+      },
+      "33": {
+        "name": "France",
+        "province": {
+        }
       }
     }
   },
