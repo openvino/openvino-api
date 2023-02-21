@@ -11,4 +11,5 @@ type Winerie struct {
 	Website      string     `json:"website"`
 	Image        string     `json:"image"`
 	PrimaryColor string     `json:"primary_color"`
+	Secret       string     `json:"secret"`
 }

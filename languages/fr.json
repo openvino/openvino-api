@@ -51,6 +51,15 @@
                 "malbec_este": "Malbec Est"
             }
         },
+        "stages": {
+            "bud_burst": "Bud burst",
+            "flowering": "Flowering",
+            "setting": "Setting",
+            "thinning": "Thinning and ulling",
+            "veraison": "Veraison",
+            "harvest": "Harvest",
+            "pruning": "Pruning"
+        },
         "temperature": "Température",
         "wind-speed": "Vitesse du vent",
         "wind-direction": "Direction du vent",
