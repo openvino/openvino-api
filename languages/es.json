@@ -187,7 +187,7 @@
     "shipping-cost-not-found": "En estos momentos, no enviamos a esta provincia.",
     "countries": {
       "34": {
-        "name": "España",
+        "name": "Spain",
         "province": {
           "1": "Andalucía",
           "2": "Aragón",
@@ -207,7 +207,8 @@
           "16": "Navarra",
           "17": "País Vasco",
           "18": "Ceuta",
-          "19": "Melilla"
+          "19": "Melilla",
+          "20": "Direct Import"
         }
       },
       "1": {
@@ -262,10 +263,11 @@
           "47": "Washington",
           "48": "West Virginia",
           "49": "Wisconsin",
-          "50": "Wyoming"
+          "50": "Wyoming”,
+          “51”: “Direct Import”
         }
       },
-      "2": {
+      "54": {
         "name": "Argentina",
         "province": {
           "1": "Mendoza",
@@ -293,6 +295,24 @@
           "23": "Santiago del Estero",
           "24": "Tierra del Fuego",
           "25": "Tucuman"
+        }
+      },
+      "33": {
+        "name": "France",
+        "province": {
+          "1": "Auvergn-Rhône-Alpes",
+          "2": "Bourgogne-France-Comté",
+          "3": "Brittany",
+          "4": "Centre-Val de Loire",
+          "5": "Corsica",
+          "6": "Grand Est",
+          "7": "Hauts-de-France",
+          "8": "Paris Region",
+          "9": "Normandie",
+          "10": "Nouvelle-Aquitaine",
+          "11": "Occitanie",
+          "12": "Pays de la Loire",
+          "13": "Provence Alpes Côte d'Azur"
         }
       }
     }

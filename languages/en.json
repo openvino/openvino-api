@@ -206,7 +206,8 @@
           "16": "Navarra",
           "17": "País Vasco",
           "18": "Ceuta",
-          "19": "Melilla"
+          "19": "Melilla",
+          "20": "Direct Import"
         }
       },
       "1": {
@@ -261,10 +262,11 @@
           "47": "Washington",
           "48": "West Virginia",
           "49": "Wisconsin",
-          "50": "Wyoming"
+          "50": "Wyoming”,
+          “51”: “Direct Import”
         }
       },
-      "2": {
+      "54": {
         "name": "Argentina",
         "province": {
           "1": "Mendoza",
