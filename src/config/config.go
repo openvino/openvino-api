@@ -3,6 +3,8 @@ package config
 import (
 	"log"
 	"os"
+
+	"github.com/joho/godotenv"
 )
 
 // Config - Global config variables
@@ -25,20 +27,25 @@ type DatabaseConfig struct {
 
 // Constants - Configuration variables structure
 type Constants struct {
-	Environment string
-	Port        string
-	Secret      string
-
-	Database DatabaseConfig
-	Ethereum EthereumConfig
+	Environment   string
+	Port          string
+	Secret        string
+	Email         string
+	EmailPassword string
+	Database      DatabaseConfig
+	Ethereum      EthereumConfig
 }
 
 // New - Retrieve configuration based on environment variables
 func New() Constants {
+	godotenv.Load()
+
 	return Constants{
-		Environment: getEnv("ENVIRONMENT", "DEV"),
-		Port:        getEnv("API_PORT", "3000"),
-		Secret:      getEnv("SECRET_AUTH", "Secretillos"),
+		Email:         getEnv("EMAIL", "example@example.com"),
+		EmailPassword: getEnv("EMAIL_PASSWORD", "example4534"),
+		Environment:   getEnv("ENVIRONMENT", "DEV"),
+		Port:          getEnv("API_PORT", "3000"),
+		Secret:        getEnv("SECRET_AUTH", "Secretillos"),
 		Database: DatabaseConfig{
 			Username:     getEnv("DB_USERNAME", "root"),
 			Password:     getEnv("DB_PASSWORD", "root"),

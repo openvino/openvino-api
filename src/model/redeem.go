@@ -26,6 +26,8 @@ type RedeemInfo struct {
 	UpdatedAt      time.Time
 	WinerieID      string
 	Winerie        Winerie
+	Status string `json:"status"`
+
 }
 
 // Sale - Base GORM Model

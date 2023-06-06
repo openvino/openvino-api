@@ -12,4 +12,6 @@ type Winerie struct {
 	Image        string     `json:"image"`
 	PrimaryColor string     `json:"primary_color"`
 	Secret       string     `json:"secret"`
+	Email       string     `json:"email"`
+	PublicKey string `json:"public_key"`
 }

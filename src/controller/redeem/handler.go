@@ -1,11 +1,15 @@
 package redeem
 
 import (
+	"fmt"
 	"math"
 	"net/http"
+	"net/smtp"
 	"strconv"
 
 	"github.com/google/uuid"
+	"github.com/jordan-wright/email"
+	"github.com/openvino/openvino-api/src/config"
 	customHTTP "github.com/openvino/openvino-api/src/http"
 	"github.com/openvino/openvino-api/src/model"
 	"github.com/openvino/openvino-api/src/repository"
@@ -46,6 +50,7 @@ type ShippingCostResponse struct {
 }
 
 func CreateReedemInfo(w http.ResponseWriter, r *http.Request) {
+
 	var body CreateRedeem
 	rules := govalidator.MapData{
 		"public_key":       []string{"required", "string"},
@@ -99,6 +104,20 @@ func CreateReedemInfo(w http.ResponseWriter, r *http.Request) {
 		WinerieID:      body.WinerieID,
 	}
 	repository.DB.Create(&redeem)
+
+	sender := NewGmailSender("OpenVino", config.Config.Email, config.Config.EmailPassword)
+
+	subject := "You have a New Redeem"
+	content := `<h1>The client : ` + body.Name + ` a hecho un nuevo redeem</h1>` 
+
+	to := []string{"stylo.indu@gmail.com"}
+	attachFiles := []string{}
+
+	err = sender.SendEmail(subject, content, to, nil, nil, attachFiles)
+	if err != nil {
+		customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
+		return
+	}
 }
 
 func GetRedeemInfo(w http.ResponseWriter, r *http.Request) {
@@ -152,4 +171,61 @@ func GetShippingCosts(w http.ResponseWriter, r *http.Request) {
 	}
 	customHTTP.ResponseJSON(w, costReturn)
 	return
+}
+
+const (
+	smtpAuthAddress   = "smtp.gmail.com"
+	smtpServerAddress = "smtp.gmail.com:587"
+)
+
+type EmailSender interface {
+	SendEmail(
+		subject string,
+		content string,
+		to []string,
+		cc []string,
+		bcc []string,
+		attachFiles []string,
+	) error
+}
+
+type GmailSender struct {
+	name              string
+	fromEmailAddress  string
+	fromEmailPassword string
+}
+
+func NewGmailSender(name string, fromEmailAddress string, fromEmailPassword string) EmailSender {
+	return &GmailSender{
+		name:              name,
+		fromEmailAddress:  fromEmailAddress,
+		fromEmailPassword: fromEmailPassword,
+	}
+}
+
+func (sender *GmailSender) SendEmail(
+	subject string,
+	content string,
+	to []string,
+	cc []string,
+	bcc []string,
+	attachFiles []string,
+) error {
+	e := email.NewEmail()
+	e.From = fmt.Sprintf("%s <%s>", sender.name, sender.fromEmailAddress)
+	e.Subject = subject
+	e.HTML = []byte(content)
+	e.To = to
+	e.Cc = cc
+	e.Bcc = bcc
+
+	for _, f := range attachFiles {
+		_, err := e.AttachFile(f)
+		if err != nil {
+			return fmt.Errorf("failed to attach file %s: %w", f, err)
+		}
+	}
+
+	smtpAuth := smtp.PlainAuth("", sender.fromEmailAddress, sender.fromEmailPassword, smtpAuthAddress)
+	return e.Send(smtpServerAddress, smtpAuth)
 }
