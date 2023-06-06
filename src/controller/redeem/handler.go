@@ -108,7 +108,8 @@ func CreateReedemInfo(w http.ResponseWriter, r *http.Request) {
 	sender := NewGmailSender("OpenVino", config.Config.Email, config.Config.EmailPassword)
 
 	subject := "You have a New Redeem"
-	content := `<h1>The customer  : ` + body.Name + ` made a new redeem</h1>` 	
+	content := `<h1>The customer  : ` + body.Name + ` made a new redeem</h1> 
+	<a href=http://localhost:3000/detail/` + redeem.ID + `/> Clik here to more details</a> `
 
 	to := []string{winerie.Email}
 	attachFiles := []string{}
