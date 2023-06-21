@@ -1,6 +1,8 @@
 package redeem
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"math"
 	"net/http"
@@ -76,7 +78,7 @@ func CreateReedemInfo(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var winerie model.Winerie
-	err = repository.DB.First(&winerie, body.WinerieID).Error
+	err = repository.DB.First(&winerie, "id = ?", body.WinerieID).Error
 	if err != nil {
 		customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
@@ -102,6 +104,8 @@ func CreateReedemInfo(w http.ResponseWriter, r *http.Request) {
 		BurnTxHash:     body.BurnTxHash,
 		ShippingTxHash: body.ShippingTxHash,
 		WinerieID:      body.WinerieID,
+		Watched : false,
+		Status : `pending`,
 	}
 	repository.DB.Create(&redeem)
 
@@ -109,12 +113,19 @@ func CreateReedemInfo(w http.ResponseWriter, r *http.Request) {
 
 	subject := "You have a New Redeem"
 	content := `<h1>The customer  : ` + body.Name + ` made a new redeem</h1> 
-	<a href=http://localhost:3000/detail/` + redeem.ID + `/> Clik here to more details</a> `
+	<a href=` + config.Config.DashboardUrl + redeem.ID + `/> Clik here to more details</a>`
 
 	to := []string{winerie.Email}
 	attachFiles := []string{}
 
 	err = sender.SendEmail(subject, content, to, nil, nil, attachFiles)
+	if err != nil {
+		customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	// Envía la notificación a Next.js
+	err = sendNotification(body.Name, redeem.ID)
 	if err != nil {
 		customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
@@ -174,10 +185,7 @@ func GetShippingCosts(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-const (
-	smtpAuthAddress   = "smtp.gmail.com"
-	smtpServerAddress = "smtp.gmail.com:587"
-)
+
 
 type EmailSender interface {
 	SendEmail(
@@ -227,6 +235,30 @@ func (sender *GmailSender) SendEmail(
 		}
 	}
 
-	smtpAuth := smtp.PlainAuth("", sender.fromEmailAddress, sender.fromEmailPassword, smtpAuthAddress)
-	return e.Send(smtpServerAddress, smtpAuth)
+	smtpAuth := smtp.PlainAuth("", sender.fromEmailAddress, sender.fromEmailPassword, config.Config.EmailSmtp)
+	return e.Send( config.Config.EmailPort, smtpAuth)
+}
+
+func sendNotification(customerName, redeemID string) error {
+	url := config.Config.ServerUrl // Reemplaza con la URL correcta de tu aplicación Next.js
+
+	data := map[string]string{
+		"customerName": customerName,
+		"redeemId":     redeemID,
+	}
+
+	payload, err := json.Marshal(data)
+	if err != nil {
+		return err
+	}
+
+	resp, err := http.Post(url, "application/json", bytes.NewBuffer(payload))
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	// Aquí puedes verificar la respuesta si es necesario
+
+	return nil
 }
