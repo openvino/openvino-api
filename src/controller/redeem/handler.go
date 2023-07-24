@@ -1,11 +1,17 @@
 package redeem
 
 import (
+	"bytes"
+	"encoding/json"
+	"fmt"
 	"math"
 	"net/http"
+	"net/smtp"
 	"strconv"
 
 	"github.com/google/uuid"
+	"github.com/jordan-wright/email"
+	"github.com/openvino/openvino-api/src/config"
 	customHTTP "github.com/openvino/openvino-api/src/http"
 	"github.com/openvino/openvino-api/src/model"
 	"github.com/openvino/openvino-api/src/repository"
@@ -46,6 +52,7 @@ type ShippingCostResponse struct {
 }
 
 func CreateReedemInfo(w http.ResponseWriter, r *http.Request) {
+
 	var body CreateRedeem
 	rules := govalidator.MapData{
 		"public_key":       []string{"required", "string"},
@@ -71,7 +78,7 @@ func CreateReedemInfo(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var winerie model.Winerie
-	err = repository.DB.First(&winerie, body.WinerieID).Error
+	err = repository.DB.First(&winerie, "id = ?", body.WinerieID).Error
 	if err != nil {
 		customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
@@ -97,8 +104,35 @@ func CreateReedemInfo(w http.ResponseWriter, r *http.Request) {
 		BurnTxHash:     body.BurnTxHash,
 		ShippingTxHash: body.ShippingTxHash,
 		WinerieID:      body.WinerieID,
+		Watched : false,
+		Status : `pending`,
+		Phone : ``,
+		City : ``,
+
 	}
 	repository.DB.Create(&redeem)
+
+	sender := NewGmailSender("OpenVino", config.Config.Email, config.Config.EmailPassword)
+
+	subject := "You have a New Redeem"
+	content := `<h1>The customer  : ` + body.Name + ` made a new redeem</h1> 
+	<a href=` + config.Config.DashboardUrl + redeem.ID + `/> Clik here to more details</a>`
+
+	to := []string{winerie.Email}
+	attachFiles := []string{}
+
+	err = sender.SendEmail(subject, content, to, nil, nil, attachFiles)
+	if err != nil {
+		customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	// Envía la notificación a Next.js
+	err = sendNotification(body.Name, redeem.ID)
+	if err != nil {
+		customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
+		return
+	}
 }
 
 func GetRedeemInfo(w http.ResponseWriter, r *http.Request) {
@@ -152,4 +186,82 @@ func GetShippingCosts(w http.ResponseWriter, r *http.Request) {
 	}
 	customHTTP.ResponseJSON(w, costReturn)
 	return
+}
+
+
+
+type EmailSender interface {
+	SendEmail(
+		subject string,
+		content string,
+		to []string,
+		cc []string,
+		bcc []string,
+		attachFiles []string,
+	) error
+}
+
+type GmailSender struct {
+	name              string
+	fromEmailAddress  string
+	fromEmailPassword string
+}
+
+func NewGmailSender(name string, fromEmailAddress string, fromEmailPassword string) EmailSender {
+	return &GmailSender{
+		name:              name,
+		fromEmailAddress:  fromEmailAddress,
+		fromEmailPassword: fromEmailPassword,
+	}
+}
+
+func (sender *GmailSender) SendEmail(
+	subject string,
+	content string,
+	to []string,
+	cc []string,
+	bcc []string,
+	attachFiles []string,
+) error {
+	e := email.NewEmail()
+	e.From = fmt.Sprintf("%s <%s>", sender.name, sender.fromEmailAddress)
+	e.Subject = subject
+	e.HTML = []byte(content)
+	e.To = to
+	e.Cc = cc
+	e.Bcc = bcc
+
+	for _, f := range attachFiles {
+		_, err := e.AttachFile(f)
+		if err != nil {
+			return fmt.Errorf("failed to attach file %s: %w", f, err)
+		}
+	}
+
+	smtpAuth := smtp.PlainAuth("", sender.fromEmailAddress, sender.fromEmailPassword, config.Config.EmailSmtp)
+	return e.Send( config.Config.EmailPort, smtpAuth)
+}
+
+func sendNotification(customerName, redeemID string) error {
+	url := config.Config.ServerUrl // Reemplaza con la URL correcta de tu aplicación Next.js
+
+	data := map[string]string{
+		"customerName": customerName,
+		"redeemId":     redeemID,
+	}
+
+	payload, err := json.Marshal(data)
+	if err != nil {
+		return err
+	}
+
+	resp, err := http.Post(url, "application/json", bytes.NewBuffer(payload))
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	// Aquí puedes verificar la respuesta si es necesario
+
+	return nil
 }
