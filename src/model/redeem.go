@@ -28,6 +28,10 @@ type RedeemInfo struct {
 	Winerie        Winerie
 	Status string `json:"redeem_status"`
 	Watched bool `json:"watched"`
+	City string `json:"city"`
+	Phone string `json:"phone"`
+
+
 }
 
 // Sale - Base GORM Model
