@@ -47,7 +47,7 @@ func New() Constants {
 	return Constants{
 		DashboardUrl:         getEnv("DASHBOARD_URL", ""),
 		ServerUrl :  getEnv("SERVER_URL", ""),
-		EmailSmtp : getEnv("EMAIL_SMPT", ""),
+		EmailSmtp : getEnv("EMAIL_SMTP", ""),
 		EmailPort: getEnv("EMAIL_PORT", ""),
 		Email:         getEnv("EMAIL", "example@example.com"),
 		EmailPassword: getEnv("EMAIL_PASSWORD", "example4534"),
