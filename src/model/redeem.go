@@ -26,7 +26,10 @@ type RedeemInfo struct {
 	UpdatedAt      time.Time
 	WinerieID      string
 	Winerie        Winerie
-	Status string `json:"status"`
+	Status string `json:"redeem_status"`
+	Watched bool `json:"watched"`
+	City string `json:"city"`
+	Phone string `json:"phone"`
 
 }
 

@@ -32,6 +32,10 @@ type Constants struct {
 	Secret        string
 	Email         string
 	EmailPassword string
+	DashboardUrl string
+	ServerUrl 	string
+	EmailSmtp 	string
+	EmailPort 	string
 	Database      DatabaseConfig
 	Ethereum      EthereumConfig
 }
@@ -41,6 +45,10 @@ func New() Constants {
 	godotenv.Load()
 
 	return Constants{
+		DashboardUrl:         getEnv("DASHBOARD_URL", ""),
+		ServerUrl :  getEnv("SERVER_URL", ""),
+		EmailSmtp : getEnv("EMAIL_SMPT", ""),
+		EmailPort: getEnv("EMAIL_PORT", ""),
 		Email:         getEnv("EMAIL", "example@example.com"),
 		EmailPassword: getEnv("EMAIL_PASSWORD", "example4534"),
 		Environment:   getEnv("ENVIRONMENT", "DEV"),

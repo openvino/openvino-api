@@ -14,4 +14,5 @@ type Winerie struct {
 	Secret       string     `json:"secret"`
 	Email       string     `json:"email"`
 	PublicKey string `json:"public_key"`
+	IsAdmin string `json:"isAdmin"`
 }
