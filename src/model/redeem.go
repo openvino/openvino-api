@@ -31,6 +31,7 @@ type RedeemInfo struct {
 	City string `json:"city"`
 	Phone string `json:"phone"`
 
+
 }
 
 // Sale - Base GORM Model
