@@ -3,6 +3,7 @@ package config
 import (
 	"log"
 	"os"
+
 )
 
 // Config - Global config variables
@@ -25,20 +26,31 @@ type DatabaseConfig struct {
 
 // Constants - Configuration variables structure
 type Constants struct {
-	Environment string
-	Port        string
-	Secret      string
-
-	Database DatabaseConfig
-	Ethereum EthereumConfig
+	Environment   string
+	Port          string
+	Secret        string
+	Email         string
+	EmailPassword string
+	DashboardUrl string
+	ServerUrl 	string
+	EmailSmtp 	string
+	EmailPort 	string
+	Database      DatabaseConfig
+	Ethereum      EthereumConfig
 }
 
 // New - Retrieve configuration based on environment variables
 func New() Constants {
 	return Constants{
-		Environment: getEnv("ENVIRONMENT", "DEV"),
-		Port:        getEnv("API_PORT", "3000"),
-		Secret:      getEnv("SECRET_AUTH", "Secretillos"),
+		DashboardUrl:         getEnv("DASHBOARD_URL", ""),
+		ServerUrl :  getEnv("SERVER_URL", ""),
+		EmailSmtp : getEnv("EMAIL_SMPT", ""),
+		EmailPort: getEnv("EMAIL_PORT", ""),
+		Email:         getEnv("EMAIL", "example@example.com"),
+		EmailPassword: getEnv("EMAIL_PASSWORD", "example4534"),
+		Environment:   getEnv("ENVIRONMENT", "DEV"),
+		Port:          getEnv("API_PORT", "3000"),
+		Secret:        getEnv("SECRET_AUTH", "Secretillos"),
 		Database: DatabaseConfig{
 			Username:     getEnv("DB_USERNAME", "root"),
 			Password:     getEnv("DB_PASSWORD", "root"),
@@ -65,3 +77,4 @@ func getEnv(key string, defaultVal string) (value string) {
 
 	return
 }
+
