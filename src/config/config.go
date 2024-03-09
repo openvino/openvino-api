@@ -4,7 +4,6 @@ import (
 	"log"
 	"os"
 
-	"github.com/joho/godotenv"
 )
 
 // Config - Global config variables
@@ -42,8 +41,6 @@ type Constants struct {
 
 // New - Retrieve configuration based on environment variables
 func New() Constants {
-	godotenv.Load()
-
 	return Constants{
 		DashboardUrl:         getEnv("DASHBOARD_URL", ""),
 		ServerUrl :  getEnv("SERVER_URL", ""),
