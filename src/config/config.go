@@ -3,7 +3,6 @@ package config
 import (
 	"log"
 	"os"
-
 )
 
 // Config - Global config variables
