@@ -106,6 +106,9 @@ func CreateReedemInfo(w http.ResponseWriter, r *http.Request) {
 		WinerieID:      body.WinerieID,
 		Watched : false,
 		Status : `pending`,
+		Phone : ``,
+		City : ``,
+
 	}
 	repository.DB.Create(&redeem)
 
