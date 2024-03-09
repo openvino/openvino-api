@@ -130,7 +130,6 @@ func CreateReedemInfo(w http.ResponseWriter, r *http.Request) {
 	// Envía la notificación a Next.js
 	err = sendNotification(body.Name, redeem.ID)
 	if err != nil {
-		log.Printf("Error al enviar la notificación: %s", err)
 		customHTTP.NewErrorResponse(w, http.StatusInternalServerError, "Error al enviar la notificación")
 		return
 	}
@@ -253,13 +252,11 @@ func sendNotification(customerName, redeemID string) error {
 
 	payload, err := json.Marshal(data)
 	if err != nil {
-		log.Printf("Error al serializar datos para la notificación: %s", err)
 		return err
 	}
 
 	resp, err := http.Post(url, "application/json", bytes.NewBuffer(payload))
 	if err != nil {
-		log.Printf("Error al enviar la notificación: %s", err)
 		return err
 	}
 	defer resp.Body.Close()
@@ -267,11 +264,10 @@ func sendNotification(customerName, redeemID string) error {
 	// Puedes verificar la respuesta aquí si es necesario
 
 	if resp.StatusCode != http.StatusOK {
-		log.Printf("La solicitud de notificación devolvió un código de estado no válido: %d", resp.StatusCode)
+		
 		return fmt.Errorf("código de estado no válido: %d", resp.StatusCode)
 	}
 
-	log.Println("Notificación enviada con éxito")
 
 	return nil
 }
