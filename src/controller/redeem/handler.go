@@ -112,25 +112,26 @@ func CreateReedemInfo(w http.ResponseWriter, r *http.Request) {
 	}
 	repository.DB.Create(&redeem)
 
-	sender := NewGmailSender("OpenVino", config.Config.Email, config.Config.EmailPassword)
+	// sender := NewGmailSender("OpenVino", config.Config.Email, config.Config.EmailPassword)
 
-	subject := "You have a New Redeem"
-	content := `<h1>The customer  : ` + body.Name + ` made a new redeem</h1> 
-	<a href=` + config.Config.DashboardUrl + redeem.ID + `/> Clik here to more details</a>`
+	// subject := "You have a New Redeem"
+	// content := `<h1>The customer  : ` + body.Name + ` made a new redeem</h1> 
+	// <a href=` + config.Config.DashboardUrl + redeem.ID + `/> Clik here to more details</a>`
 
-	to := []string{winerie.Email}
-	attachFiles := []string{}
+	// to := []string{winerie.Email}
+	// attachFiles := []string{}
 
-	err = sender.SendEmail(subject, content, to, nil, nil, attachFiles)
-	if err != nil {
-		customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
-		return
-	}
+	// err = sender.SendEmail(subject, content, to, nil, nil, attachFiles)
+	// if err != nil {
+	// 	customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
+	// 	return
+	// }
 
 	// Envía la notificación a Next.js
 	err = sendNotification(body.Name, redeem.ID)
 	if err != nil {
-		customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
+		log.Printf("Error al enviar la notificación: %s", err)
+		customHTTP.NewErrorResponse(w, http.StatusInternalServerError, "Error al enviar la notificación")
 		return
 	}
 }
@@ -243,7 +244,7 @@ func (sender *GmailSender) SendEmail(
 }
 
 func sendNotification(customerName, redeemID string) error {
-	url := config.Config.ServerUrl // Reemplaza con la URL correcta de tu aplicación Next.js
+	url := config.Config.ServerUrl // Asegúrate de que esta URL comience con "https://"
 
 	data := map[string]string{
 		"customerName": customerName,
@@ -252,16 +253,26 @@ func sendNotification(customerName, redeemID string) error {
 
 	payload, err := json.Marshal(data)
 	if err != nil {
+		log.Printf("Error al serializar datos para la notificación: %s", err)
 		return err
 	}
 
 	resp, err := http.Post(url, "application/json", bytes.NewBuffer(payload))
 	if err != nil {
+		log.Printf("Error al enviar la notificación: %s", err)
 		return err
 	}
 	defer resp.Body.Close()
 
-	// Aquí puedes verificar la respuesta si es necesario
+	// Puedes verificar la respuesta aquí si es necesario
+
+	if resp.StatusCode != http.StatusOK {
+		log.Printf("La solicitud de notificación devolvió un código de estado no válido: %d", resp.StatusCode)
+		return fmt.Errorf("código de estado no válido: %d", resp.StatusCode)
+	}
+
+	log.Println("Notificación enviada con éxito")
 
 	return nil
 }
+
