@@ -69,7 +69,7 @@ func CreateReedemInfo(w http.ResponseWriter, r *http.Request) {
 		"burn_tx_hash":     []string{"required", "string"},
 		"shipping_tx_hash": []string{"required", "string"},
 		"signature":        []string{"required", "string"},
-		"winerie_id":       []string{"required", "int"},
+		"winerie_id":       []string{"required", "string"},
 	}
 	err := customHTTP.DecodeJSONBody(w, r, &body, rules)
 	if err != nil {

@@ -81,6 +81,7 @@
     "error": "Error"
   },
   "wallet": {
+    "your-name" : "Tu nombre",
     "email": "Email",
     "your-email": "Tu email",
     "connect": "Conectar wallet",

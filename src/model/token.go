@@ -17,6 +17,8 @@ type TokenWinerie struct {
 	Stage           string    `json:"stage"`
 	WinerieID       string
 	Winerie         Winerie
+	NetworkId           string    `json:"networkId"`
+	ProvideUrl          string    `json:"provide_url"`
 }
 
 type Metrics struct {

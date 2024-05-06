@@ -19,6 +19,7 @@ type SaleRequest struct {
 	Email     string `json:"email"`
 	Amount    int    `json:"amount"`
 	WinerieID string `json:"winerie_id"`
+	ID 		  int 	 `json:"id"`
 }
 
 type SaleResponse struct {
@@ -35,7 +36,8 @@ func CreateSale(w http.ResponseWriter, r *http.Request) {
 		"name":       []string{"optional", "string"},
 		"email":      []string{"required", "string"},
 		"amount":     []string{"required", "int"},
-		"winerie_id": []string{"required", "int"},
+		"winerie_id": []string{"required", "string"},
+		"id": 		  []string{"required", "int"},
 	}
 	err := customHTTP.DecodeJSONBody(w, r, &body, rules)
 	if err != nil {
@@ -44,7 +46,7 @@ func CreateSale(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var winerie model.Winerie
-	err = repository.DB.First(&winerie, body.WinerieID).Error
+	err = repository.DB.First(&winerie, "id = ?", body.WinerieID).Error
 	if err != nil {
 		customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
@@ -57,6 +59,7 @@ func CreateSale(w http.ResponseWriter, r *http.Request) {
 	}
 	repository.DB.FirstOrCreate(&user, user)
 	sale := model.Sale{
+		ID:         body.ID,
 		CustomerId: body.PublicKey,
 		Customer:   user,
 		Amount:     body.Amount,

@@ -80,6 +80,7 @@
     "error": "Error"
   },
   "wallet": {
+    "your-name" : "Your name",
     "email": "Email",
     "your-email": "Your email",
     "connect": "Connect wallet",
