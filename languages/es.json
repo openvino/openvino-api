@@ -81,9 +81,15 @@
     "error": "Error"
   },
   "wallet": {
+    "invalid-network": "Este token no es compatible con la red seleccionada.",
+    "select-op" : "Por favor seleccione la red  OPTIMISM",
+    "select-eth" : "Por favor seleccione la red  Ethereum mainnet",
+    "select-sepolia-op" : "Por favor seleccione la red  OP Sepolia",
     "your-name" : "Tu nombre",
     "email": "Email",
     "your-email": "Tu email",
+    "select-button" : "Seleccionar red",
+
     "connect": "Conectar wallet",
     "invalid-amount": "Cantidad inválida",
     "invalid-trade": "Intercambio inválido",

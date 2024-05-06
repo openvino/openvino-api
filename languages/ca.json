@@ -80,7 +80,12 @@
     "error": "Error"
   },
   "wallet": {
-    "your-name" : "Your name",
+    "invalid-network": "Aquest token no es compatible amb la red seleccionada.",
+    "select-op": "Si us plau, seleccioneu la xarxa OPTIMISM",
+    "select-eth": "Si us plau, seleccioneu la xarxa Ethereum mainnet",
+    "select-sepolia-op": "Si us plau, seleccioneu la xarxa OP Sepolia",
+    "select-button": "Seleccionar xarxa",
+    "your-name": "Your name",
     "email": "Email",
     "your-email": "Your email",
     "connect": "Connect wallet",
