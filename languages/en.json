@@ -80,6 +80,7 @@
     "error": "Error"
   },
   "wallet": {
+    "estimate" : "Make sure you have enough ETH for the gas of your transaction.",
     "invalid-network": "This token is not compatible with the selected network.",
     "select-op" : "Please select the OPTIMISM network",
     "select-eth" : "Please select the Ethereum mainnet",
