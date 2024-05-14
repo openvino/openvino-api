@@ -80,7 +80,7 @@
     "error": "Error"
   },
   "wallet": {
-    "estimate" : "Certifique-se de ter ETH suficiente para pagar o gás da sua transação.",
+    "estimate" : "Certifique-se de ter ETH suficiente para o gás da sua transação.",
     "invalid-network": "Este token não é compatiível com a rede selecionada.",
     "select-op" : "Por favor seleccione a rede  OPTIMISM",
     "select-eth" : "Por favor seleccione a rede  Ethereum mainnet",
