@@ -31,5 +31,22 @@ var Routes = customHTTP.RoutePrefix{
 			HandlerFunc: GetShippingCosts,
 			Scopes:      []customHTTP.Scope{customHTTP.GuestScope},
 		},
+
+		{
+			Name:        "UpdateRedeemInfo",
+			Method:      http.MethodPost,
+			Pattern:     "/update",
+			HandlerFunc: UpdateRedeemInfo,
+			Scopes:      []customHTTP.Scope{customHTTP.GuestScope},
+		},
+
+
+		{
+			Name:        "CreateErrorRedeemInfo",
+			Method:      http.MethodPost,
+			Pattern:     "/createLog",
+			HandlerFunc: CreateErrorRedeemInfo,
+			Scopes:      []customHTTP.Scope{customHTTP.GuestScope},
+		},
 	},
 }

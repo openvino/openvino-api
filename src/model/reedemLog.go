@@ -2,12 +2,9 @@ package model
 
 import (
 	"time"
-
-	"github.com/jinzhu/gorm"
 )
 
-// Sale - Base GORM Model
-type RedeemInfo struct {
+type RedeemLog struct {
 	ID             string `gorm:"primary_key"`
 	CustomerId     string `json:"customer_id"`
 	Customer       User   `json:"customer" gorm:"foreignKey:CustomerId"`
@@ -19,26 +16,17 @@ type RedeemInfo struct {
 	Zip            string `json:"zip"`
 	TelegramId     string `json:"telegram_id"`
 	Amount         uint   `json:"amount"`
-	Signature      string `json:"signature"`
-	BurnTxHash     string `json:"burn_tx_hash"`
-	ShippingTxHash string `json:"shipping_tx_hash"`
 	CreatedAt      time.Time
 	UpdatedAt      time.Time
 	WinerieID      string
 	Winerie        Winerie
-	Status string `json:"redeem_status"`
-	Watched bool `json:"watched"`
 	City string `json:"city"`
 	Phone string `json:"phone"`
+	Signature      string `json:"signature"`
+	BurnTxHash     string `json:"burn_tx_hash"`
+	ShippingTxHash string `json:"shipping_tx_hash"`
+	ErrorMessage string `json:"error_message"`
 	ShippingPaidStatus string `json:"shipping_paid_status"`
 	Pickup string `json:"pickup"`
 }
 
-// Sale - Base GORM Model
-type ShippingCost struct {
-	gorm.Model
-	CountryId   string    `json:"country_id"`
-	ProvinceId  string    `json:"province_id"`
-	BaseCost    float64 `json:"base_cost"`
-	CostPerUnit float64 `json:"cost_per_unit"`
-}

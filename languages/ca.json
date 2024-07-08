@@ -171,6 +171,14 @@
     "10": "Get in touch."
   },
   "redeem": {
+    "noClose": "Si us plau, no tanqui aquesta finestra fins a completar tots els passos",
+    "step1": "Pas 1/2:",
+    "step2": "Pas 2/2:",
+    "omit": "Ometre",
+    "token": "Token",
+    "amount": "Quantitat",
+    "paidRedeem": "Tens enviaments pendents de pagament, vols pagar-los ara?",
+    "pickup": "Vols recollir-ho al celler?",
     "name": "Name",
     "line1": "Street Address",
     "line2": "Unit",

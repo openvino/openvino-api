@@ -173,6 +173,15 @@
     "10": "Ponerse en contacto."
   },
   "redeem": {
+    
+    "noClose" : "Por favor no cierre esta ventana hasta completar todos los pasos",
+    "step1" : "Paso 1/2:",
+    "step2" : "Paso 2/2:",
+    "omit": "Omitir",
+    "token": "Token",
+    "amount": "Cantidad",
+    "paidRedeem" : "Tienes envíos pendientes de pago, ¿Deseas pagarlos ahora?",
+    "pickup" : "¿Quieres retirarlo en la bodega?",
     "name": "Nombre",
     "line1": "Calle",
     "line2": "Apartamento o unidad",
@@ -181,17 +190,17 @@
     "zip": "Código postal",
     "country": "País",
     "email": "Email",
-    "address": "Direcci?n Ethereum",
+    "address": "Direcciónn Ethereum",
     "timestamp": "Hora",
     "numberBurned": "Token Redimido",
     "telegram": "Telegram ID",
     "next": "Siguiente",
     "shipping-cost": "Costos de env?o",
     "place-order": "Hacer Pedido",
-    "you-got-wine": "Recib?s Vino!",
+    "you-got-wine": "Recibís Vino!",
     "estimated-time": "Tiempo estimado de env?o 2-3 semanas. Tiempo de enví varí seg?n destino",
     "burn": "Quemar",
-    "transfer-shipping-costs": "Transferir gastos de enví",
+    "transfer-shipping-costs": "Transferir gastos de envío",
     "shipping-cost-not-found": "En estos momentos, no enviamos a esta provincia.",
     "countries": {
       "34": {

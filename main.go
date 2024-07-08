@@ -33,7 +33,7 @@ func main() {
 	}
 
 	log.Println("4. Migrating database model...")
-	repository.DB.AutoMigrate(
+	repository.DB.AutoMigrate(&model.RedeemLog{},
 		&model.Sale{}, &model.SensorRecord{}, &model.User{},
 		&model.Task{}, &model.Tools{}, &model.Chemicals{},
 		&model.RedeemInfo{}, &model.ShippingCost{}, &model.AnalysisInfo{}, &model.Expense{}, &model.Token{}, &model.Winerie{}, &model.TokenWinerie{})
