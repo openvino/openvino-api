@@ -42,6 +42,7 @@ type CreateRedeem struct {
 	WinerieID      string `json:"winerie_id"`
 	ShippingPaidStatus string `json:"shipping_paid_status"`
 	Pickup string `json:"pickup"`
+	City string `json:"city"`
 }
 
 type QueryRedeem struct {
@@ -57,24 +58,24 @@ func CreateReedemInfo(w http.ResponseWriter, r *http.Request) {
 
 	var body CreateRedeem
 	rules := govalidator.MapData{
-		"public_key":       []string{"required", "string"},
-		"name":             []string{"required", "string"},
-		"email":            []string{"required", "string"},
-		"amount":           []string{"required", "uint"},
-		"year":             []string{"required", "string"},
-		"street":           []string{"required", "string"},
-		"number":           []string{"required", "string"},
-		"country_id":       []string{"required", "string"},
-		"province_id":      []string{"required", "string"},
-		"zip":              []string{"required", "string"},
-		"telegram_id":      []string{"optional", "string"},
-		"burn_tx_hash":     []string{"required", "string"},
-		"shipping_tx_hash": []string{"required", "string"},
-		"signature":        []string{"required", "string"},
-		"winerie_id":       []string{"required", "string"},
+		"public_key":       	[]string{"required", "string"},
+		"name":             	[]string{"required", "string"},
+		"email":            	[]string{"required", "string"},
+		"amount":           	[]string{"required", "uint"},
+		"year":             	[]string{"required", "string"},
+		"street":           	[]string{"required", "string"},
+		"number":           	[]string{"required", "string"},
+		"country_id":       	[]string{"required", "string"},
+		"province_id":      	[]string{"required", "string"},
+		"zip":              	[]string{"required", "string"},
+		"telegram_id":      	[]string{"optional", "string"},
+		"burn_tx_hash":    	 	[]string{"required", "string"},
+		"shipping_tx_hash": 	[]string{"required", "string"},
+		"signature":        	[]string{"required", "string"},
+		"winerie_id":       	[]string{"required", "string"},
         "shipping_paid_status": []string{"required", "string"},
-		"pickup":      []string{"optional", "string"},
-
+		"pickup":      			[]string{"optional", "string"},
+		"city"   :     			[]string{"optional", "string"},
 	}
 	err := customHTTP.DecodeJSONBody(w, r, &body, rules)
 	if err != nil {
@@ -109,12 +110,12 @@ func CreateReedemInfo(w http.ResponseWriter, r *http.Request) {
 		BurnTxHash:     body.BurnTxHash,
 		ShippingTxHash: body.ShippingTxHash,
 		WinerieID:      body.WinerieID,
-		ShippingPaidStatus : body.ShippingPaidStatus,
-		Watched : false,
-		Status : `pending`,
-		Phone : ``,
-		City : ``,
-		Pickup : body.Pickup,
+		City: body.City,
+		ShippingPaidStatus: body.ShippingPaidStatus,
+		Watched: false,
+		Status: `pending`,
+		Phone: ``,
+		Pickup: body.Pickup,
 	}
 	repository.DB.Create(&redeem)
 
@@ -341,6 +342,7 @@ func CreateErrorRedeemInfo(w http.ResponseWriter, r *http.Request) {
         ShippingPaidStatus string `json:"shipping_paid_status"`
         ErrorMessage      string `json:"error_message"`
 		Pickup 				string 	`json:"pickup"`
+		City string `json:"city"`
     }
 
     rules := govalidator.MapData{
@@ -362,6 +364,7 @@ func CreateErrorRedeemInfo(w http.ResponseWriter, r *http.Request) {
         "shipping_paid_status": []string{"string"},
         "error_message":      []string{"string"},
 		"pickup":             []string{"string"},
+		"city":               []string{"string"},
     }
 
     err := customHTTP.DecodeJSONBody(w, r, &body, rules)
@@ -399,7 +402,8 @@ func CreateErrorRedeemInfo(w http.ResponseWriter, r *http.Request) {
         WinerieID:          body.WinerieID,
         ShippingPaidStatus: body.ShippingPaidStatus,
         ErrorMessage:       body.ErrorMessage,
-		Pickup :            body.Pickup,
+		Pickup:            	body.Pickup,
+		City: 				body.City,
     }
 
     if err := repository.DB.Create(&redeemLog).Error; err != nil {
