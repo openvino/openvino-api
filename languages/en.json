@@ -116,7 +116,8 @@
     "dont-have-one": "Don't have one?",
     "connection-error": "Connection Error",
     "you-own": "You own {{amount}}",
-    "redeem-message": "You can redeem your {{token}} tokens for bottles of wine, starting on {{date}}."
+    "redeem-message": "You can redeem your {{token}} tokens for bottles of wine, starting on {{date}}.",
+    "name": "Yor name"
   },
   "sensors": {
     "title": "Costaflores Organic Vineyard",
