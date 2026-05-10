@@ -3,19 +3,15 @@ package config
 import (
 	"log"
 	"os"
-
-	"github.com/joho/godotenv"
 )
 
 // Config - Global config variables
 var Config Constants
-
 type EthereumConfig struct {
 	InfuraSecretKey string
 	Network         string
 	ENS             string
 }
-
 // DatabaseConfig - Database configuration variables
 type DatabaseConfig struct {
 	Username     string
@@ -24,7 +20,6 @@ type DatabaseConfig struct {
 	Port         string
 	DatabaseName string
 }
-
 // Constants - Configuration variables structure
 type Constants struct {
 	Environment   string
@@ -42,8 +37,6 @@ type Constants struct {
 
 // New - Retrieve configuration based on environment variables
 func New() Constants {
-	godotenv.Load()
-
 	return Constants{
 		DashboardUrl:         getEnv("DASHBOARD_URL", ""),
 		ServerUrl :  getEnv("SERVER_URL", ""),
@@ -80,3 +73,4 @@ func getEnv(key string, defaultVal string) (value string) {
 
 	return
 }
+
