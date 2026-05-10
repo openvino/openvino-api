@@ -47,10 +47,6 @@ func New() Constants {
 	return Constants{
 		DashboardUrl:         getEnv("DASHBOARD_URL", ""),
 		ServerUrl :  getEnv("SERVER_URL", ""),
-		EmailSmtp : getEnv("EMAIL_SMTP", ""),
-		EmailPort: getEnv("EMAIL_PORT", ""),
-		Email:         getEnv("EMAIL", "example@example.com"),
-		EmailPassword: getEnv("EMAIL_PASSWORD", "example4534"),
 		Environment:   getEnv("ENVIRONMENT", "DEV"),
 		Port:          getEnv("API_PORT", "3000"),
 		Secret:        getEnv("SECRET_AUTH", "Secretillos"),
@@ -60,11 +56,6 @@ func New() Constants {
 			Host:         getEnv("DB_HOST", "127.0.0.1"),
 			Port:         getEnv("DB_PORT", "3306"),
 			DatabaseName: getEnv("DB_NAME", "enchainte"),
-		},
-		Ethereum: EthereumConfig{
-			InfuraSecretKey: getEnv("ETH_INFURA_SECRET", ""),
-			Network:         getEnv("ETH_NETWORK", ""),
-			ENS:             getEnv("ETH_ENS", "rinkibino.eth"),
 		},
 	}
 }
