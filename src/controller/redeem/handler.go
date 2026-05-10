@@ -25,24 +25,24 @@ type QueryShipping struct {
 }
 
 type CreateRedeem struct {
-	PublicKey      string `json:"public_key"`
-	Email          string `json:"email"`
-	Name           string `json:"name"`
-	Year           string `json:"year"`
-	Street         string `json:"street"`
-	Number         string `json:"number"`
-	CountryId      string   `json:"country_id"`
-	ProvinceId     string   `json:"province_id"`
-	Zip            string `json:"zip"`
-	TelegramId     string `json:"telegram_id"`
-	Amount         uint   `json:"amount"`
-	Signature      string `json:"signature"`
-	BurnTxHash     string `json:"burn_tx_hash"`
-	ShippingTxHash string `json:"shipping_tx_hash"`
-	WinerieID      string `json:"winerie_id"`
+	PublicKey          string `json:"public_key"`
+	Email              string `json:"email"`
+	Name               string `json:"name"`
+	Year               string `json:"year"`
+	Street             string `json:"street"`
+	Number             string `json:"number"`
+	CountryId          string `json:"country_id"`
+	ProvinceId         string `json:"province_id"`
+	Zip                string `json:"zip"`
+	TelegramId         string `json:"telegram_id"`
+	Amount             uint   `json:"amount"`
+	Signature          string `json:"signature"`
+	BurnTxHash         string `json:"burn_tx_hash"`
+	ShippingTxHash     string `json:"shipping_tx_hash"`
+	WinerieID          string `json:"winerie_id"`
 	ShippingPaidStatus string `json:"shipping_paid_status"`
-	Pickup string `json:"pickup"`
-	City string `json:"city"`
+	Pickup             string `json:"pickup"`
+	City               string `json:"city"`
 }
 
 type QueryRedeem struct {
@@ -58,24 +58,24 @@ func CreateReedemInfo(w http.ResponseWriter, r *http.Request) {
 
 	var body CreateRedeem
 	rules := govalidator.MapData{
-		"public_key":       	[]string{"required", "string"},
-		"name":             	[]string{"required", "string"},
-		"email":            	[]string{"required", "string"},
-		"amount":           	[]string{"required", "uint"},
-		"year":             	[]string{"required", "string"},
-		"street":           	[]string{"required", "string"},
-		"number":           	[]string{"required", "string"},
-		"country_id":       	[]string{"required", "string"},
-		"province_id":      	[]string{"required", "string"},
-		"zip":              	[]string{"required", "string"},
-		"telegram_id":      	[]string{"optional", "string"},
-		"burn_tx_hash":    	 	[]string{"required", "string"},
-		"shipping_tx_hash": 	[]string{"required", "string"},
-		"signature":        	[]string{"required", "string"},
-		"winerie_id":       	[]string{"required", "string"},
-        "shipping_paid_status": []string{"required", "string"},
-		"pickup":      			[]string{"optional", "string"},
-		"city"   :     			[]string{"optional", "string"},
+		"public_key":           []string{"required", "string"},
+		"name":                 []string{"required", "string"},
+		"email":                []string{"required", "string"},
+		"amount":               []string{"required", "uint"},
+		"year":                 []string{"required", "string"},
+		"street":               []string{"required", "string"},
+		"number":               []string{"required", "string"},
+		"country_id":           []string{"required", "string"},
+		"province_id":          []string{"required", "string"},
+		"zip":                  []string{"required", "string"},
+		"telegram_id":          []string{"optional", "string"},
+		"burn_tx_hash":         []string{"required", "string"},
+		"shipping_tx_hash":     []string{"required", "string"},
+		"signature":            []string{"required", "string"},
+		"winerie_id":           []string{"required", "string"},
+		"shipping_paid_status": []string{"required", "string"},
+		"pickup":               []string{"optional", "string"},
+		"city":                 []string{"optional", "string"},
 	}
 	err := customHTTP.DecodeJSONBody(w, r, &body, rules)
 	if err != nil {
@@ -95,34 +95,34 @@ func CreateReedemInfo(w http.ResponseWriter, r *http.Request) {
 	}
 	repository.DB.FirstOrCreate(&user, user)
 	redeem := model.RedeemInfo{
-		ID:             uuid.New().String(),
-		CustomerId:     body.PublicKey,
-		Customer:       user,
-		Year:           body.Year,
-		Street:         body.Street,
-		Number:         body.Number,
-		CountryId:      body.CountryId,
-		ProvinceId:     body.ProvinceId,
-		Zip:            body.Zip,
-		TelegramId:     body.TelegramId,
-		Amount:         body.Amount,
-		Signature:      body.Signature,
-		BurnTxHash:     body.BurnTxHash,
-		ShippingTxHash: body.ShippingTxHash,
-		WinerieID:      body.WinerieID,
-		City: body.City,
+		ID:                 uuid.New().String(),
+		CustomerId:         body.PublicKey,
+		Customer:           user,
+		Year:               body.Year,
+		Street:             body.Street,
+		Number:             body.Number,
+		CountryId:          body.CountryId,
+		ProvinceId:         body.ProvinceId,
+		Zip:                body.Zip,
+		TelegramId:         body.TelegramId,
+		Amount:             body.Amount,
+		Signature:          body.Signature,
+		BurnTxHash:         body.BurnTxHash,
+		ShippingTxHash:     body.ShippingTxHash,
+		WinerieID:          body.WinerieID,
+		City:               body.City,
 		ShippingPaidStatus: body.ShippingPaidStatus,
-		Watched: false,
-		Status: `pending`,
-		Phone: ``,
-		Pickup: body.Pickup,
+		Watched:            false,
+		Status:             `pending`,
+		Phone:              ``,
+		Pickup:             body.Pickup,
 	}
 	repository.DB.Create(&redeem)
 
 	// sender := NewGmailSender("OpenVino", config.Config.Email, config.Config.EmailPassword)
 
 	// subject := "You have a New Redeem"
-	// content := `<h1>The customer  : ` + body.Name + ` made a new redeem</h1> 
+	// content := `<h1>The customer  : ` + body.Name + ` made a new redeem</h1>
 	// <a href=` + config.Config.DashboardUrl + redeem.ID + `/> Clik here to more details</a>`
 
 	// to := []string{winerie.Email}
@@ -195,8 +195,6 @@ func GetShippingCosts(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-
-
 type EmailSender interface {
 	SendEmail(
 		subject string,
@@ -246,7 +244,7 @@ func (sender *GmailSender) SendEmail(
 	}
 
 	smtpAuth := smtp.PlainAuth("", sender.fromEmailAddress, sender.fromEmailPassword, config.Config.EmailSmtp)
-	return e.Send( config.Config.EmailPort, smtpAuth)
+	return e.Send(config.Config.EmailPort, smtpAuth)
 }
 
 func sendNotification(customerName, redeemID string) error {
@@ -271,11 +269,148 @@ func sendNotification(customerName, redeemID string) error {
 	// Puedes verificar la respuesta aquí si es necesario
 
 	if resp.StatusCode != http.StatusOK {
-		
+
 		return fmt.Errorf("código de estado no válido: %d", resp.StatusCode)
 	}
-
 
 	return nil
 }
 
+func UpdateRedeemInfo(w http.ResponseWriter, r *http.Request) {
+	if r.Body == nil {
+		customHTTP.NewErrorResponse(w, http.StatusBadRequest, "Request body is empty")
+		return
+	}
+
+	var body struct {
+		BurnTxHash         string `json:"burn_tx_hash"`
+		ShippingTxHash     string `json:"shipping_tx_hash"`
+		ShippingPaidStatus string `json:"shipping_paid_status"`
+	}
+
+	rules := govalidator.MapData{
+		"burn_tx_hash":         []string{"required", "string"},
+		"shipping_tx_hash":     []string{"required", "string"},
+		"shipping_paid_status": []string{"required", "string"},
+	}
+
+	err := customHTTP.DecodeJSONBody(w, r, &body, rules)
+	if err != nil {
+		customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	var redeem model.RedeemInfo
+	err = repository.DB.First(&redeem, "burn_tx_hash = ?", body.BurnTxHash).Error
+	if err != nil {
+		customHTTP.NewErrorResponse(w, http.StatusNotFound, "Redeem not found")
+		return
+	}
+
+	redeem.ShippingTxHash = body.ShippingTxHash
+	redeem.ShippingPaidStatus = body.ShippingPaidStatus
+
+	err = repository.DB.Save(&redeem).Error
+	if err != nil {
+		customHTTP.NewErrorResponse(w, http.StatusInternalServerError, "Failed to update redeem info")
+		return
+	}
+
+	customHTTP.ResponseJSON(w, map[string]string{"message": "Redeem info updated successfully"})
+}
+
+func CreateErrorRedeemInfo(w http.ResponseWriter, r *http.Request) {
+	if r.Body == nil {
+		customHTTP.NewErrorResponse(w, http.StatusBadRequest, "Request body is empty")
+		return
+	}
+
+	var body struct {
+		PublicKey          string `json:"public_key"`
+		Email              string `json:"email"`
+		Name               string `json:"name"`
+		Year               string `json:"year"`
+		Street             string `json:"street"`
+		Number             string `json:"number"`
+		CountryId          string `json:"country_id"`
+		ProvinceId         string `json:"province_id"`
+		Zip                string `json:"zip"`
+		TelegramId         string `json:"telegram_id"`
+		Amount             uint   `json:"amount"`
+		Signature          string `json:"signature"`
+		BurnTxHash         string `json:"burn_tx_hash"`
+		ShippingTxHash     string `json:"shipping_tx_hash"`
+		WinerieID          string `json:"winerie_id"`
+		ShippingPaidStatus string `json:"shipping_paid_status"`
+		ErrorMessage       string `json:"error_message"`
+		Pickup             string `json:"pickup"`
+		City               string `json:"city"`
+	}
+
+	rules := govalidator.MapData{
+		"public_key":           []string{"string"},
+		"name":                 []string{"string"},
+		"email":                []string{"string"},
+		"amount":               []string{"uint"},
+		"year":                 []string{"string"},
+		"street":               []string{"string"},
+		"number":               []string{"string"},
+		"country_id":           []string{"string"},
+		"province_id":          []string{"string"},
+		"zip":                  []string{"string"},
+		"telegram_id":          []string{"string"},
+		"burn_tx_hash":         []string{"string"},
+		"shipping_tx_hash":     []string{"string"},
+		"signature":            []string{"string"},
+		"winerie_id":           []string{"string"},
+		"shipping_paid_status": []string{"string"},
+		"error_message":        []string{"string"},
+		"pickup":               []string{"string"},
+		"city":                 []string{"string"},
+	}
+
+	err := customHTTP.DecodeJSONBody(w, r, &body, rules)
+	if err != nil {
+		customHTTP.NewErrorResponse(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	if body.PublicKey == "" {
+		customHTTP.NewErrorResponse(w, http.StatusBadRequest, "Required fields are missing")
+		return
+	}
+
+	user := model.User{
+		PublicKey: body.PublicKey,
+	}
+	repository.DB.FirstOrCreate(&user, user)
+
+	redeemLog := model.RedeemLog{
+		ID:                 uuid.New().String(),
+		CustomerId:         body.PublicKey,
+		Customer:           user,
+		Year:               body.Year,
+		Street:             body.Street,
+		Number:             body.Number,
+		CountryId:          body.CountryId,
+		ProvinceId:         body.ProvinceId,
+		Zip:                body.Zip,
+		TelegramId:         body.TelegramId,
+		Amount:             body.Amount,
+		Signature:          body.Signature,
+		BurnTxHash:         body.BurnTxHash,
+		ShippingTxHash:     body.ShippingTxHash,
+		WinerieID:          body.WinerieID,
+		ShippingPaidStatus: body.ShippingPaidStatus,
+		ErrorMessage:       body.ErrorMessage,
+		Pickup:             body.Pickup,
+		City:               body.City,
+	}
+
+	if err := repository.DB.Create(&redeemLog).Error; err != nil {
+		customHTTP.NewErrorResponse(w, http.StatusInternalServerError, "Failed to create redeem log")
+		return
+	}
+
+	customHTTP.ResponseJSON(w, map[string]string{"message": "Redeem log created successfully"})
+}
