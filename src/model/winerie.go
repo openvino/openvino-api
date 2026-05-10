@@ -13,6 +13,6 @@ type Winerie struct {
 	PrimaryColor string     `json:"primary_color"`
 	Secret       string     `json:"secret"`
 	Email       string     `json:"email"`
-	PublicKey string `json:"public_key"`
-	IsAdmin string `json:"isAdmin"`
+	EmailRedeem  string `json:"email_redeem"` // Asegúrate de incluir este campo
+
 }

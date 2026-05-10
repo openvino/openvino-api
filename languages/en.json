@@ -80,6 +80,13 @@
     "error": "Error"
   },
   "wallet": {
+    "estimate" : "Make sure you have enough ETH for the gas of your transaction.",
+    "invalid-network": "This token is not compatible with the selected network.",
+    "select-op" : "Please select the OPTIMISM network",
+    "select-eth" : "Please select the Ethereum mainnet",
+    "select-sepolia-op" : "Please select the OP Sepolia network",
+    "select-button" : "Select network",
+    "your-name": "Your name",
     "email": "Email",
     "your-email": "Your email",
     "connect": "Connect wallet",
@@ -164,6 +171,16 @@
     "10": "Get in touch."
   },
   "redeem": {
+
+    "noClose": "Please do not close this window until all steps are completed",
+    "step1": "Step 1/2:",
+    "step2": "Step 2/2:",
+    "omit": "Omit",
+    "token": "Token",
+    "amount": "Amount",
+    "paidRedeem": "You have pending shipments for payment, would you like to pay for them now?",
+    "pickup": "Do you want to pick it up at the warehouse?",
+    
     "name": "Name",
     "line1": "Street Address",
     "line2": "Unit",

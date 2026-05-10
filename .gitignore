@@ -2,3 +2,4 @@
 .env
 vendor/
 .DS_STORE
+openvino-api
