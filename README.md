@@ -26,19 +26,17 @@ Fill the required parameters in the .env file. Some of them can be left empty de
     ENVIRONMENT= [dev/prod environment]
     API_PORT= [exposed api port]
 
-    DATABASE_DIALECT= [dialect]
-    DATABASE_CHARSET= [charset used: utf8]
-    DATABASE_NAME=  [database name]
-
-    DATABASE_HOST= [database endpoint]
-    DATABASE_PORT= [database exposed port]
-
-    DATABASE_USERNAME= [database user]
-    DATABASE_PASSWORD= [database password]
-    DATABASE_PASSWORD_ROOT= [database root password]
+    DB_NAME=  [database name]
+    DB_HOST= [database endpoint]
+    DB_PORT= [database exposed port, 5433 by default for local development]
+    DB_USERNAME= [database user]
+    DB_PASSWORD= [database password]
+    SKIP_AUTO_MIGRATE= [true to skip automatic schema migration on startup]
 
 To run locally:
 
+    docker compose --profile local-db up -d openvino-db
+    set -a; source .env; set +a
     go run main.go
 
 To run on Docker (WIP) you have to modify the Dockerfile $database and the $port with the proper information and:
@@ -48,4 +46,8 @@ To run on Docker (WIP) you have to modify the Dockerfile $database and the $port
 
 To run using Docker-compose:
 
-    docker-compose up
+    docker compose up --build openvino-api
+
+To run using Docker-compose with the local database:
+
+    docker compose --profile local-db up --build

@@ -1,11 +1,11 @@
-version: "3.7"
-
 services:
   openvino-db:
+    profiles:
+      - local-db
     image: postgres
     container_name: openvino-database
     ports:
-      - 5432:5432
+      - "${DB_PORT}:5432"
     expose:
       - 5432
     environment:
@@ -27,8 +27,8 @@ services:
       - "API_PORT=${API_PORT}"
       - "DB_USERNAME=${DB_USERNAME}"
       - "DB_PASSWORD=${DB_PASSWORD}"
-      - "DB_HOST=openvino-db"
-      - "DB_PORT=5432"
+      - "DB_HOST=${DB_HOST}"
+      - "DB_PORT=${DB_PORT}"
       - "DB_NAME=${DB_NAME}"
       - "SECRET_AUTH=${SECRET_AUTH}"
       - "ETH_DEFAULT_ADMIN_PUBLIC=${ETH_DEFAULT_ADMIN_PUBLIC}"
@@ -36,6 +36,7 @@ services:
       - "ETH_INFURA_SECRET=${ETH_INFURA_SECRET}"
       - "ETH_NETWORK=${ETH_NETWORK}"
       - "ETH_SMART_CONTRACT=${ETH_SMART_CONTRACT}"
+      - "SKIP_AUTO_MIGRATE=${SKIP_AUTO_MIGRATE:-false}"
     networks:
       - internal
     ports:
@@ -43,7 +44,7 @@ services:
     expose:
       - "${API_PORT}"
     restart: always
-    command: ./wait-for-it.sh -t 0 openvino-db:5432 -- ./main
+    command: ./wait-for-it.sh -t 0 ${DB_HOST}:${DB_PORT} -- ./main
 
 networks:
   internal:

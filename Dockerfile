@@ -11,6 +11,7 @@ COPY wait-for-it.sh .
 COPY go.mod .
 COPY go.sum .
 
+RUN chmod +x wait-for-it.sh
 RUN go mod download
 RUN go mod verify
 

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/openvino/openvino-api/src/config"
 	"github.com/openvino/openvino-api/src/model"
@@ -32,11 +33,15 @@ func main() {
 		log.Panicf("Unable to connect to infura: %s", err.Error())
 	}
 
-	log.Println("4. Migrating database model...")
-	repository.DB.AutoMigrate(&model.RedeemLog{},
-		&model.Sale{}, &model.SensorRecord{}, &model.User{},
-		&model.Task{}, &model.Tools{}, &model.Chemicals{},
-		&model.RedeemInfo{}, &model.ShippingCost{}, &model.AnalysisInfo{}, &model.Expense{}, &model.Token{}, &model.Winerie{}, &model.TokenWinerie{})
+	if os.Getenv("SKIP_AUTO_MIGRATE") == "true" {
+		log.Println("4. Skipping database model migration...")
+	} else {
+		log.Println("4. Migrating database model...")
+		repository.DB.AutoMigrate(&model.RedeemLog{},
+			&model.Sale{}, &model.SensorRecord{}, &model.User{},
+			&model.Task{}, &model.Tools{}, &model.Chemicals{},
+			&model.RedeemInfo{}, &model.ShippingCost{}, &model.AnalysisInfo{}, &model.Expense{}, &model.Token{}, &model.Winerie{}, &model.TokenWinerie{})
+	}
 	defer repository.DB.Close()
 
 	log.Println("----------------------------")
