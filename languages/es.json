@@ -117,7 +117,8 @@
     "dont-have-one": "¿No tienes ninguno?",
     "connection-error": "Error de conexión",
     "you-own": "Tienes {{amount}}",
-    "redeem-message": "Puedes canjear sus tokens {{token}} por botellas de vino, a partir del {{date}}."
+    "redeem-message": "Puedes canjear sus tokens {{token}} por botellas de vino, a partir del {{date}}.",
+    "name": "Tu nombre y apellido"
   },
   "sensors": {
     "title": "Costaflores Organic Vineyard",
